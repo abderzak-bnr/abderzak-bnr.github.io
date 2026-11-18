@@ -30,7 +30,7 @@ export const FORBIDDEN_TRANSLITERATIONS = new Set([
   "akbar", "quran", "islam", "koran", "ramadan", "kaaba", "masjid", "alapa", "juda", "kolisu"
 ]);
 
-const SYSTEM_INSTRUCTION = `You are an elite Toki Pona linguist adhering strictly to Sonja Lang's official pu & ku suli vocabulary (the exact 137 words listed below), phonology (only letters: a, e, i, j, k, l, m, n, o, p, s, t, u, w; NO forbidden syllables ji, ti, wo, wu), and classical pu grammar.
+export const SYSTEM_INSTRUCTION = `You are an elite Toki Pona linguist adhering strictly to Sonja Lang's official pu & ku suli vocabulary (the exact 137 words listed below), phonology (only letters: a, e, i, j, k, l, m, n, o, p, s, t, u, w; NO forbidden syllables ji, ti, wo, wu), and classical pu grammar.
 
 ALLOWED 137 VOCABULARY WORDS:
 a, akesi, ala, alasa, ale, ali, anpa, ante, anu, awen, e, en, epiku, esun, ijo, ike, ilo, insa, jaki, jan, jasima, jelo, jo, kala, kalama, kama, kasi, ken, kepeken, kijetesantakalu, kili, kin, kipisi, kiwen, ko, kon, ku, kule, kulupu, kute, la, lanpan, lape, laso, lawa, leko, len, lete, li, lili, linja, lipu, loje, lon, luka, lukin, lupa, ma, mama, mani, meli, meso, mi, mije, misikeke, moku, moli, monsi, monsuta, mu, mun, musi, mute, n, namako, nanpa, nasa, nasin, nena, ni, nimi, noka, o, oko, olin, ona, open, pakala, pali, palisa, pan, pana, pi, pilin, pimeja, pini, pipi, poka, poki, pona, pu, sama, seli, selo, seme, sewi, sijelo, sike, sin, sina, sinpin, sitelen, soko, sona, soweli, suli, suno, supa, suwi, tan, taso, tawa, telo, tenpo, toki, tomo, tonsi, tu, unpa, uta, utala, walo, wan, waso, wawa, weka, wile.
@@ -187,7 +187,23 @@ export function validateTokiPona(tokiPonaText: string): { valid: boolean; invali
   };
 }
 
-// Helper: Call Gemini models with retry cascade
+function parseModelOutput(raw: string) {
+  try {
+    return JSON.parse(raw);
+  } catch {
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (match) {
+      return JSON.parse(match[0]);
+    }
+    return {
+      toki_pona: raw.trim(),
+      literal_breakdown: "",
+      grammar_note_ar: "",
+    };
+  }
+}
+
+// Helper: Call Gemini models (Primary AI)
 async function callGemini(
   apiKey: string,
   systemInstruction: string,
@@ -226,30 +242,67 @@ async function callGemini(
           return text;
         }
       } else {
-        console.warn(`Model ${model} returned status ${res.status}`);
+        console.warn(`Gemini model ${model} returned status ${res.status}`);
       }
     } catch (err) {
-      console.warn(`Invocation of model ${model} failed:`, err);
+      console.warn(`Invocation of Gemini model ${model} failed:`, err);
     }
   }
 
   throw new Error("All candidate Gemini models failed to return a valid response.");
 }
 
-function parseGeminiOutput(raw: string) {
-  try {
-    return JSON.parse(raw);
-  } catch {
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (match) {
-      return JSON.parse(match[0]);
+// Helper: Call Groq models (Automatic Tier-2 Fallback)
+async function callGroq(
+  apiKey: string,
+  systemInstruction: string,
+  messages: Array<{ role: string; content: string }>
+): Promise<string> {
+  const candidateModels = [
+    "llama-3.3-70b-versatile",
+    "openai/gpt-oss-120b",
+    "qwen/qwen3.8-27b",
+    "openai/gpt-oss-20b"
+  ];
+
+  const url = "https://api.groq.com/openai/v1/chat/completions";
+
+  for (const model of candidateModels) {
+    try {
+      const payload = {
+        model,
+        temperature: 0.2,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: systemInstruction },
+          ...messages
+        ],
+      };
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const content = data?.choices?.[0]?.message?.content;
+        if (content) {
+          return content;
+        }
+      } else {
+        console.warn(`Groq model ${model} returned status ${res.status}`);
+      }
+    } catch (err) {
+      console.warn(`Invocation of Groq model ${model} failed:`, err);
     }
-    return {
-      toki_pona: raw.trim(),
-      literal_breakdown: "",
-      grammar_note_ar: "",
-    };
   }
+
+  throw new Error("All candidate Groq models failed to return a valid response.");
 }
 
 Deno.serve(async (req: Request) => {
@@ -259,15 +312,7 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const apiKey = Deno.env.get("GEMINI_API_KEY");
-    if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: "GEMINI_API_KEY is not configured on the server." }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    const { text, source_lang } = await req.json();
+    const { text, source_lang, force_engine } = await req.json();
     const cleanText = (text || "").trim();
 
     if (!cleanText) {
@@ -280,48 +325,112 @@ Deno.serve(async (req: Request) => {
     const langContext = source_lang ? `(Source Language: ${source_lang})` : "";
     const primaryPrompt = `Translate the following sentence into authentic Toki Pona ${langContext}:\n"${cleanText}"`;
 
-    // First attempt
-    let rawResult = await callGemini(apiKey, SYSTEM_INSTRUCTION, primaryPrompt);
-    let parsedResult = parseGeminiOutput(rawResult);
+    const geminiKey = Deno.env.get("GEMINI_API_KEY");
+    const groqKey = Deno.env.get("GROQ_API_KEY");
 
-    // Server-Side Strict Vocabulary Validation
-    let validation = validateTokiPona(parsedResult.toki_pona);
+    let finalResponse: any = null;
 
-    // If validation fails, initiate automatic server-side retry loop
-    if (!validation.valid) {
-      console.warn("Validation failed for first attempt. Invalid words:", validation.invalidWords);
+    // ==========================================
+    // Tier 1: Gemini AI (unless force_engine === "groq")
+    // ==========================================
+    if (geminiKey && force_engine !== "groq") {
+      try {
+        const rawResult = await callGemini(geminiKey, SYSTEM_INSTRUCTION, primaryPrompt);
+        let parsedResult = parseModelOutput(rawResult);
 
-      const correctionPrompt = `CRITICAL CORRECTION REQUIRED:
+        // Strict 137-Word Vocabulary Validation
+        let validation = validateTokiPona(parsedResult.toki_pona);
+
+        // Auto-retry loop for Gemini if unauthorized words are detected
+        if (!validation.valid) {
+          console.warn("Gemini validation failed. Invalid tokens:", validation.invalidWords);
+          const correctionPrompt = `CRITICAL CORRECTION REQUIRED:
 Your previous translation: "${parsedResult.toki_pona}"
 contained unauthorized or forbidden non-pu/ku words: [${validation.invalidWords.join(", ")}].
-Remember the absolute rules:
+Remember:
 1. Every lowercase word MUST belong strictly to the 137 official Toki Pona words.
-2. NEVER use phonetic transliterations like Isilan, Kulan, Ala, Lamatan, etc. Decompose them into pure pu semantic circumlocutions! (e.g., Islam -> nasin sewi, Muslim -> jan pi nasin sewi, Quran -> lipu sewi, Allah -> sewi, fasting -> tenpo pi moku ala).
-3. Do not invent foreign words.
+2. NEVER use phonetic transliterations like Isilan, Kulan, Ala, Lamatan. Decompose into pure pu semantics (Islam -> nasin sewi, Quran -> lipu sewi, Allah -> sewi).
+Re-translate: "${cleanText}" returning valid JSON.`;
 
-Please re-translate the original sentence:
-"${cleanText}"
-
-Return strictly the valid JSON object with keys: "toki_pona", "literal_breakdown", "grammar_note_ar".`;
-
-      try {
-        const retryRaw = await callGemini(apiKey, SYSTEM_INSTRUCTION, correctionPrompt);
-        const retryParsed = parseGeminiOutput(retryRaw);
-        const retryValidation = validateTokiPona(retryParsed.toki_pona);
-
-        if (retryValidation.valid) {
-          parsedResult = retryParsed;
-        } else {
-          console.warn("Retry attempt still contained invalid words:", retryValidation.invalidWords);
-          // Clean any remaining illegal words by falling back or filtering
-          parsedResult = retryParsed;
+          try {
+            const retryRaw = await callGemini(geminiKey, SYSTEM_INSTRUCTION, correctionPrompt);
+            const retryParsed = parseModelOutput(retryRaw);
+            const retryVal = validateTokiPona(retryParsed.toki_pona);
+            if (retryVal.valid) {
+              parsedResult = retryParsed;
+            }
+          } catch (retryErr) {
+            console.warn("Gemini retry failed:", retryErr);
+          }
         }
-      } catch (retryErr) {
-        console.error("Retry attempt failed:", retryErr);
+
+        finalResponse = {
+          ...parsedResult,
+          engine: "gemini",
+        };
+      } catch (geminiError) {
+        console.warn("Primary AI (Gemini) failed. Engaging Tier-2 Groq fallback...", geminiError);
       }
     }
 
-    return new Response(JSON.stringify(parsedResult), {
+    // ==========================================
+    // Tier 2: Groq AI Fallback (llama-3.3-70b-versatile)
+    // ==========================================
+    if (!finalResponse && groqKey) {
+      try {
+        console.log("Calling Groq AI Tier-2 fallback...");
+        const groqRaw = await callGroq(groqKey, SYSTEM_INSTRUCTION, [
+          { role: "user", content: primaryPrompt },
+        ]);
+        let parsedResult = parseModelOutput(groqRaw);
+
+        // Strict 137-Word Vocabulary Validation on Groq
+        let validation = validateTokiPona(parsedResult.toki_pona);
+
+        // Auto-retry loop for Groq if unauthorized words are detected
+        if (!validation.valid) {
+          console.warn("Groq validation failed. Invalid tokens:", validation.invalidWords);
+          const correctionPrompt = `CRITICAL CORRECTION REQUIRED:
+Your previous translation: "${parsedResult.toki_pona}"
+contained unauthorized or forbidden non-pu/ku words: [${validation.invalidWords.join(", ")}].
+Remember:
+1. Every lowercase word MUST belong strictly to the 137 official Toki Pona words.
+2. NEVER use phonetic transliterations like Isilan, Kulan, Ala, Lamatan. Decompose into pure pu semantics (Islam -> nasin sewi, Quran -> lipu sewi, Allah -> sewi).
+Re-translate: "${cleanText}" returning valid JSON.`;
+
+          try {
+            const retryRaw = await callGroq(groqKey, SYSTEM_INSTRUCTION, [
+              { role: "user", content: primaryPrompt },
+              { role: "assistant", content: groqRaw },
+              { role: "user", content: correctionPrompt },
+            ]);
+            const retryParsed = parseModelOutput(retryRaw);
+            const retryVal = validateTokiPona(retryParsed.toki_pona);
+            if (retryVal.valid) {
+              parsedResult = retryParsed;
+            }
+          } catch (retryErr) {
+            console.warn("Groq retry failed:", retryErr);
+          }
+        }
+
+        finalResponse = {
+          ...parsedResult,
+          engine: "groq",
+        };
+      } catch (groqError) {
+        console.error("Tier-2 AI (Groq) failed:", groqError);
+      }
+    }
+
+    if (!finalResponse) {
+      return new Response(
+        JSON.stringify({ error: "Both Primary (Gemini) and Tier-2 (Groq) AI engines failed to generate a response." }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    return new Response(JSON.stringify(finalResponse), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

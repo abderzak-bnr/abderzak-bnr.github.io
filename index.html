@@ -1103,6 +1103,39 @@
       font-family: var(--font-latin);
     }
 
+    .engine-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      font-family: var(--font-ar), system-ui, sans-serif;
+    }
+    .engine-badge.gemini {
+      background: rgba(16, 185, 129, 0.12);
+      color: #047857;
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .engine-badge.groq {
+      background: rgba(249, 115, 22, 0.12);
+      color: #c2410c;
+      border-color: rgba(249, 115, 22, 0.35);
+    }
+    .engine-badge.dict {
+      background: rgba(59, 130, 246, 0.12);
+      color: #1d4ed8;
+      border-color: rgba(59, 130, 246, 0.35);
+    }
+    .engine-badge.offline {
+      background: rgba(107, 114, 128, 0.12);
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+
     /* Dictionary */
     .dict-header {
       display: flex;
@@ -1571,7 +1604,10 @@
           </div>
           <div class="result-strip">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">النتيجة بالتوكي بونا:</span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">النتيجة بالتوكي بونا:</span>
+                <span id="arEngineBadge" class="engine-badge gemini">✨ ترجمة ذكية مدققة (Gemini AI)</span>
+              </div>
               <div style="display:flex; gap:6px;">
                 <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.78rem;" onclick="speakText(document.getElementById('arTpResult').textContent)">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
@@ -1606,7 +1642,10 @@
           </div>
           <div class="result-strip">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Toki Pona translation:</span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Toki Pona translation:</span>
+                <span id="enEngineBadge" class="engine-badge gemini">✨ ترجمة ذكية مدققة (Gemini AI)</span>
+              </div>
               <div style="display:flex; gap:6px;">
                 <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.78rem;" onclick="speakText(document.getElementById('enTpResult').textContent)">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
@@ -2201,11 +2240,72 @@
       return finalTp;
     }
 
-    // Call Supabase Edge Function powered by Gemini AI without exposing keys
+    function updateEngineBadge(badgeId, type) {
+      const el = document.getElementById(badgeId);
+      if (!el) return;
+      el.className = "engine-badge " + type;
+      if (type === "gemini") {
+        el.textContent = "✨ ترجمة ذكية مدققة (Gemini AI)";
+      } else if (type === "groq") {
+        el.textContent = "🚀 ترجمة ذكية احتياطية فائقة السرعة (Groq AI)";
+      } else if (type === "dict") {
+        el.textContent = "⚡ ترجمة فورية من القاموس الشامل";
+      } else if (type === "offline") {
+        el.textContent = "📖 ترجمة بالمحلل القواعدي المحلي";
+      }
+    }
+
+    function findInstantDictMatch(inputStr, lang) {
+      const clean = (inputStr || "").trim().toLowerCase();
+      if (!clean) return null;
+
+      // 1. Check official 137 dictionary
+      if (typeof DICTIONARY !== "undefined") {
+        for (const item of DICTIONARY) {
+          if (item.w === clean) {
+            return {
+              toki_pona: item.w,
+              literal_breakdown: `${item.w}: ${item.ar}`,
+              grammar_note_ar: `كلمة معتمدة في المعجم الرسمي (137 كلمة) - التصنيف: ${item.cat}.`,
+              engine: "dict"
+            };
+          }
+          if (lang === "ar") {
+            const arTokens = item.ar.split(/[\/\s,،]+/).map(t => t.trim());
+            if (arTokens.includes(clean) || item.ar === clean) {
+              return {
+                toki_pona: item.w,
+                literal_breakdown: `${item.w} = ${item.ar}`,
+                grammar_note_ar: `مطابقة فورية مباشرة من القاموس المعتمد لكلمة (${item.w}).`,
+                engine: "dict"
+              };
+            }
+          }
+        }
+      }
+
+      // 2. Check direct phrase match
+      if (typeof EN_TO_TP_PHRASES !== "undefined") {
+        for (const [enP, tpP] of EN_TO_TP_PHRASES) {
+          if (clean === enP) {
+            return {
+              toki_pona: tpP,
+              literal_breakdown: `${enP} -> ${tpP}`,
+              grammar_note_ar: "مطابقة مباشرة للعبارة من القاموس الشامل.",
+              engine: "dict"
+            };
+          }
+        }
+      }
+
+      return null;
+    }
+
+    // Call Supabase Edge Function powered by Gemini AI with Groq AI Tier-2 Fallback
     async function callTokiPonaAI(text, sourceLang) {
       const endpoints = [
-        "https://hbgptqmqvaiahspdpjvd.supabase.co/functions/v1/translate-tokipona",
-        "https://lthggnfapmovwahqusbj.supabase.co/functions/v1/translate-tokipona"
+        "https://lthggnfapmovwahqusbj.supabase.co/functions/v1/translate-tokipona",
+        "https://hbgptqmqvaiahspdpjvd.supabase.co/functions/v1/translate-tokipona"
       ];
       for (const ep of endpoints) {
         try {
@@ -2231,17 +2331,34 @@
       const noteEl = document.getElementById("arBridgeNote");
       if (!arInput) return;
 
-      resEl.textContent = "جاري الترجمة بذكاء Gemini...";
-      noteEl.textContent = "الاتصال بدالة الترجمة السحابية...";
+      // 0. Check Instant Local Dictionary Match for single word / exact match
+      const instantMatch = findInstantDictMatch(arInput, "ar");
+      if (instantMatch && arInput.split(/\s+/).length === 1) {
+        resEl.textContent = instantMatch.toki_pona;
+        noteEl.textContent = `${instantMatch.literal_breakdown} • ${instantMatch.grammar_note_ar}`;
+        updateEngineBadge("arEngineBadge", "dict");
+        const tpInput = document.getElementById("tpInput");
+        if (tpInput) {
+          tpInput.value = instantMatch.toki_pona;
+          updatePreview();
+        }
+        return;
+      }
 
-      // 1. Try secure Gemini AI via Supabase Edge Function
+      resEl.textContent = "جاري الترجمة بالذكاء الاصطناعي...";
+      noteEl.textContent = "الاتصال بدالة الترجمة السحابية (Gemini / Groq)...";
+
+      // 1. Try Dual-AI (Gemini Primary -> Groq Tier-2 Fallback) via Supabase Edge Function
       const aiResult = await callTokiPonaAI(arInput, "ar");
-      if (aiResult) {
+      if (aiResult && aiResult.toki_pona) {
         resEl.textContent = aiResult.toki_pona;
         let details = [];
         if (aiResult.literal_breakdown) details.push(`التحليل الحرفي: ${aiResult.literal_breakdown}`);
         if (aiResult.grammar_note_ar) details.push(`قواعد: ${aiResult.grammar_note_ar}`);
-        noteEl.textContent = details.join(" • ") || "ترجمة ذكية دقيقة عبر Gemini AI";
+        noteEl.textContent = details.join(" • ") || "ترجمة ذكية مدققة";
+
+        // Display engine badge according to backend engine
+        updateEngineBadge("arEngineBadge", aiResult.engine === "groq" ? "groq" : "gemini");
 
         // Auto-update Sitelen Pona glyphs preview in converter stage
         const tpInput = document.getElementById("tpInput");
@@ -2254,6 +2371,7 @@
 
       // 2. Automatic Offline / Semantic Fallback
       noteEl.textContent = "استخدام المحرك البديل...";
+      updateEngineBadge("arEngineBadge", "offline");
       try {
         const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(arInput)}&langpair=ar|en`;
         const response = await fetch(url);
@@ -2292,17 +2410,34 @@
       const noteEl = document.getElementById("enBridgeNote");
       if (!enInput) return;
 
-      resEl.textContent = "Translating with Gemini AI...";
-      if (noteEl) noteEl.textContent = "Connecting to Supabase Edge Function...";
+      // 0. Check Instant Local Dictionary Match
+      const instantMatch = findInstantDictMatch(enInput, "en");
+      if (instantMatch && enInput.split(/\s+/).length <= 2) {
+        resEl.textContent = instantMatch.toki_pona;
+        if (noteEl) noteEl.textContent = `${instantMatch.literal_breakdown} • ${instantMatch.grammar_note_ar}`;
+        updateEngineBadge("enEngineBadge", "dict");
+        const tpInput = document.getElementById("tpInput");
+        if (tpInput) {
+          tpInput.value = instantMatch.toki_pona;
+          updatePreview();
+        }
+        return;
+      }
 
-      // 1. Try secure Gemini AI via Supabase Edge Function
+      resEl.textContent = "Translating with AI...";
+      if (noteEl) noteEl.textContent = "Connecting to Supabase Edge Function (Gemini / Groq)...";
+
+      // 1. Try Dual-AI (Gemini Primary -> Groq Tier-2 Fallback) via Supabase Edge Function
       const aiResult = await callTokiPonaAI(enInput, "en");
-      if (aiResult) {
+      if (aiResult && aiResult.toki_pona) {
         resEl.textContent = aiResult.toki_pona;
         let details = [];
         if (aiResult.literal_breakdown) details.push(`Breakdown: ${aiResult.literal_breakdown}`);
         if (aiResult.grammar_note_ar) details.push(`قواعد: ${aiResult.grammar_note_ar}`);
         if (noteEl) noteEl.textContent = details.join(" • ") || "AI Toki Pona Translation";
+
+        // Display engine badge according to backend engine
+        updateEngineBadge("enEngineBadge", aiResult.engine === "groq" ? "groq" : "gemini");
 
         // Auto-update Sitelen Pona glyphs preview in converter stage
         const tpInput = document.getElementById("tpInput");
@@ -2314,6 +2449,7 @@
       }
 
       // 2. Automatic Offline / Semantic Fallback
+      updateEngineBadge("enEngineBadge", "offline");
       const tpOut = convertEnglishSentenceToTokiPona(enInput);
       resEl.textContent = tpOut;
       if (noteEl) noteEl.textContent = "Offline dictionary fallback translation";
