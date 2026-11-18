@@ -1,0 +1,2749 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>توكي بونا | مترجم ومحوّل رموز Sitelen Pona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- تحميل ملف الرموز الاحترافية الـ 137 من مشروع اللعبة -->
+  <script src="glyphs.js"></script>
+  <style>
+    :root {
+      --bg: #0e1117;
+      --bg-subtle: #131722;
+      --surface: #181d29;
+      --surface-raised: #202737;
+      --surface-hover: #262f42;
+      --border: #283347;
+      --border-subtle: #1f2738;
+      --border-strong: #3b4863;
+      
+      /* Toki Pona warm sun/canary yellow */
+      --primary: #F5C518;
+      --primary-hover: #FFD438;
+      --primary-active: #DFB010;
+      --primary-content: #0E1117;
+      
+      /* Semantic & Secondary */
+      --accent: #4ADE80;
+      --accent-hover: #22C55E;
+      --accent-content: #0E1117;
+      --coral: #FB7185;
+      --info: #38BDF8;
+      
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.6);
+      
+      --font-ar: 'Cairo', system-ui, -apple-system, sans-serif;
+      --font-latin: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-ar);
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.65;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Top Sticky Navigation Bar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14, 17, 23, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      user-select: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: var(--primary);
+      color: var(--primary-content);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(245, 197, 24, 0.25);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.2px;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-latin);
+      display: block;
+      line-height: 1.2;
+    }
+
+    /* Desktop Nav Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text);
+      background: var(--surface-raised);
+    }
+
+    .nav-btn.active {
+      background: var(--primary);
+      color: var(--primary-content);
+      border-color: var(--primary);
+    }
+
+    .sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      background: var(--surface-raised);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      margin-right: 8px;
+      font-family: var(--font-latin);
+      font-weight: 600;
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #64748b;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .sync-dot.online {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* Hamburger Button (Mobile Only) */
+    .burger-btn {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      transition: background 0.15s;
+    }
+
+    .burger-btn:hover {
+      background: var(--surface-raised);
+    }
+
+    .burger-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+
+    .burger-btn.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger-btn.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Dropdown Drawer */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 20px 18px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu .nav-btn {
+      text-align: right;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: 769px) {
+      .burger-btn {
+        display: none !important;
+      }
+      .mobile-menu {
+        display: none !important;
+      }
+      .nav-links {
+        display: flex !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none !important;
+      }
+      .burger-btn {
+        display: flex !important;
+      }
+      .brand-sub {
+        display: none;
+      }
+    }
+
+    /* Page Container */
+    .container {
+      max-width: 1140px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+      animation: tabFadeIn 0.18s ease-out;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Home View Elements */
+    .hero-box {
+      text-align: center;
+      max-width: 780px;
+      margin: 16px auto 36px;
+      padding: 0 10px;
+    }
+
+    .hero-header-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 197, 24, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+    }
+
+    .hero-meta-divider {
+      color: var(--text-subtle);
+    }
+
+    .hero-meta-words {
+      color: var(--text-muted);
+    }
+
+    .hero-box h1 {
+      font-size: clamp(1.8rem, 4vw, 2.35rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .hero-box h1 span {
+      color: var(--primary);
+    }
+
+    .hero-lead {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    /* Hub Layout - Asymmetric Content-Driven Grid */
+    .hub-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      box-shadow: var(--shadow-sm);
+      box-sizing: border-box;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      background: var(--surface-raised);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card.featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.04) 0%, var(--surface) 100%);
+      border-color: rgba(245, 197, 24, 0.3);
+    }
+
+    .feature-card.featured:hover {
+      border-color: var(--primary);
+    }
+
+    .feature-card-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid rgba(245, 197, 24, 0.3);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    .feature-header-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .feature-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(245, 197, 24, 0.12);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(245, 197, 24, 0.25);
+    }
+
+    .feature-icon-box.accent {
+      background: rgba(74, 222, 128, 0.12);
+      color: var(--accent);
+      border-color: rgba(74, 222, 128, 0.25);
+    }
+
+    .feature-icon-box.terracotta {
+      background: rgba(251, 113, 133, 0.12);
+      color: var(--coral);
+      border-color: rgba(251, 113, 133, 0.25);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    .glyph-sample-ribbon {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .sample-glyph-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-family: var(--font-latin);
+    }
+
+    .feature-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+    }
+
+    .feature-btn-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-card:hover .feature-btn-label svg {
+      transform: translateX(-4px);
+    }
+    .feature-btn-label svg {
+      transition: transform 0.2s;
+    }
+
+    .facts-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 16px;
+      max-width: 1040px;
+      margin: 32px auto 0;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .fact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fact-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: var(--font-latin);
+    }
+
+    .fact-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .fact-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .hub-layout {
+        grid-template-columns: 1fr;
+      }
+      .fact-divider {
+        display: none;
+      }
+      .facts-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+    }
+
+    /* Cards & Form Layouts */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .card-title span.label-accent {
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    textarea {
+      width: 100%;
+      height: 125px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      color: var(--text);
+      font-size: 1.12rem;
+      direction: ltr;
+      text-align: left;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: var(--font-latin);
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    textarea.rtl-area {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--font-ar);
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.2);
+    }
+
+    .quick-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      background: var(--surface-raised);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      direction: ltr;
+      font-family: var(--font-latin);
+      font-weight: 500;
+    }
+
+    .chip.rtl-chip {
+      direction: rtl;
+      font-family: var(--font-ar);
+    }
+
+    .chip:hover {
+      background: var(--primary);
+      color: var(--primary-content);
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+
+    .translation-box {
+      margin-top: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-right: 3px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .translation-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .translation-result {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.4;
+    }
+
+    .translation-note {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Controls Bar - Fully Responsive & Non-overflowing */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      flex: 0 1 auto;
+    }
+
+    .control-group label {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    /* Segmented Background Control */
+    .segmented-control {
+      display: inline-flex;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .segment-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .segment-btn:hover {
+      color: var(--text);
+    }
+
+    .segment-btn.active {
+      background: var(--surface-raised);
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Color Swatch */
+    .color-picker-wrapper {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      opacity: 0;
+    }
+
+    .color-swatch-indicator {
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    /* Range Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 86px;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      transition: transform 0.15s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .size-val {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-family: var(--font-latin);
+      font-weight: 700;
+    }
+
+    /* Toggle Checkbox */
+    .toggle-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-control input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .toggle-label {
+      font-size: 0.84rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Preview Stage */
+    .preview-stage {
+      min-height: 200px;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      direction: ltr;
+      border: 1px dashed var(--border);
+      box-sizing: border-box;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .preview-stage.bg-dark {
+      background: #000000;
+    }
+
+    .preview-stage.bg-light {
+      background: #ffffff;
+    }
+
+    .preview-stage.bg-transparent {
+      background-image:
+        linear-gradient(45deg, #181d29 25%, transparent 25%),
+        linear-gradient(-45deg, #181d29 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #181d29 75%),
+        linear-gradient(-45deg, transparent 75%, #181d29 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    }
+
+    .glyph-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .glyph-unit svg {
+      transition: transform 0.15s ease;
+    }
+
+    .glyph-unit:hover svg {
+      transform: scale(1.1);
+    }
+
+    .glyph-caption {
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: var(--font-latin);
+      letter-spacing: 0.2px;
+    }
+
+    .cartouche-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 2.5px solid currentColor;
+      border-radius: var(--radius-lg);
+      padding: 6px 14px;
+      background: rgba(245, 197, 24, 0.04);
+    }
+
+    /* Action Buttons */
+    .actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-content);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      color: var(--primary-content);
+      box-shadow: 0 2px 10px rgba(245, 197, 24, 0.35);
+    }
+
+    .btn-primary:active {
+      background: var(--primary-active);
+    }
+
+    .btn-secondary {
+      background: var(--surface-raised);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--accent-content);
+      border-color: var(--accent);
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+      color: var(--accent-content);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      background: var(--surface-raised);
+    }
+
+    /* Breakdown Bar */
+    .breakdown-bar {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      direction: ltr;
+    }
+
+    .token-pill {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 0.84rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .token-pill.compound {
+      border-color: rgba(251, 113, 133, 0.4);
+      background: rgba(251, 113, 133, 0.08);
+    }
+
+    .token-pill .tp {
+      font-weight: 700;
+      color: var(--primary);
+      font-family: var(--font-latin);
+    }
+
+    .token-pill.compound .tp {
+      color: var(--coral);
+    }
+
+    .token-pill .ar {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      direction: rtl;
+      font-family: var(--font-ar);
+    }
+
+    /* Translator Hub */
+    .hub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 860px) {
+      .hub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sub-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sub-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .sub-box-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .lang-tag {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-latin);
+    }
+
+    .result-strip {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tp-generated {
+      font-family: var(--font-latin);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      direction: ltr;
+      text-align: left;
+    }
+
+    .bridge-info {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      direction: ltr;
+      text-align: left;
+      font-family: var(--font-latin);
+    }
+
+    /* Dictionary */
+    .dict-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-input-wrapper svg {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 42px 10px 14px;
+      color: var(--text);
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      font-family: var(--font-ar);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.2);
+    }
+
+    .cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .cat-btn {
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-weight: 600;
+    }
+
+    .cat-btn:hover {
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: var(--primary-content);
+      font-weight: 700;
+      border-color: var(--primary);
+    }
+
+    .dict-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .dict-grid {
+        grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+        gap: 8px;
+      }
+    }
+
+    .dict-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dict-item:hover {
+      border-color: var(--primary);
+      background: var(--surface-raised);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dict-word {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.05rem;
+      font-family: var(--font-latin);
+    }
+
+    .dict-meaning {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--primary);
+      color: var(--primary-content);
+      font-weight: 800;
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand" onclick="switchTab('home'); return false;" aria-label="الصفحة الرئيسية لتوكي بونا">
+        <div class="brand-mark" title="Sitelen Pona: pona">
+          <svg viewBox="-10 0 738 1000" width="22" height="22" style="fill:currentColor; display:block;"><path fill="currentColor" d="M576 365q0 -42 44 -42q34 0 34 24q0 4 -1 13t-7.5 32.5t-17.5 46.5t-35 53.5t-56 55.5q-7 6 -56.5 25t-57.5 19q-7 0 -33 2t-37 2q-35 0 -67 -10t-52.5 -20.5t-26.5 -10.5t-6 -5q0 -4 -19 -23t-24 -19q-4 0 -25.5 -31t-21.5 -37q0 -4 -5 -9.5t-9 -19.5q-3 -10 -14.5 -37 t-11.5 -34q0 -4 7 -19.5t14 -15.5q3 0 8 6q3 3 5 2l6 -3t7 -2q15 0 20 30q2 15 19 50.5t30 53.5q19 26 36.5 39t70.5 39q32 15 73 15q81 0 139 -46q24 -18 33 -24q7 -5 16.5 -30t15 -46.5t5.5 -23.5z" /></svg>
+        </div>
+        <div>
+          <span class="brand-title">توكي بونا</span>
+          <span class="brand-sub">toki pona</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Tabs -->
+      <div class="nav-links">
+        <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>الرئيسية</span>
+        </button>
+        <button class="nav-btn" data-tab="converter" onclick="switchTab('converter')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          <span>المحوّل والرموز</span>
+        </button>
+        <button class="nav-btn" data-tab="translator" onclick="switchTab('translator')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span>المترجم الفوري</span>
+        </button>
+        <button class="nav-btn" data-tab="dictionary" onclick="switchTab('dictionary')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
+          <span>القاموس (137 كلمة)</span>
+        </button>
+        <span class="sync-status" title="حالة ربط التسجيلات الصوتية البشرية من مشروع Linku">
+          <span class="sync-dot" id="syncDot"></span>
+          <span id="syncText">Linku</span>
+        </span>
+      </div>
+
+      <!-- Mobile Burger Button -->
+      <button class="burger-btn" id="burgerBtn" aria-label="القائمة" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+        <span>الرئيسية</span>
+      </button>
+      <button class="nav-btn" data-tab="converter" onclick="switchTab('converter')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+        <span>المحوّل واستوديو الرموز (Sitelen Pona)</span>
+      </button>
+      <button class="nav-btn" data-tab="translator" onclick="switchTab('translator')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+        <span>المترجم الفوري (عربي / إنجليزي)</span>
+      </button>
+      <button class="nav-btn" data-tab="dictionary" onclick="switchTab('dictionary')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path></svg>
+        <span>القاموس المعتمد (137 كلمة)</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HOME VIEW: Brand Hero & Featured Tools Hub -->
+    <section id="sec-home" class="view-section active">
+      <div class="hero-box">
+        <div class="hero-header-meta">
+          <span class="brand-pill">
+            <svg viewBox="-10 0 738 1000" width="16" height="16" style="fill:currentColor; display:inline-block; vertical-align:middle;"><path fill="currentColor" d="M576 365q0 -42 44 -42q34 0 34 24q0 4 -1 13t-7.5 32.5t-17.5 46.5t-35 53.5t-56 55.5q-7 6 -56.5 25t-57.5 19q-7 0 -33 2t-37 2q-35 0 -67 -10t-52.5 -20.5t-26.5 -10.5t-6 -5q0 -4 -19 -23t-24 -19q-4 0 -25.5 -31t-21.5 -37q0 -4 -5 -9.5t-9 -19.5q-3 -10 -14.5 -37 t-11.5 -34q0 -4 7 -19.5t14 -15.5q3 0 8 6q3 3 5 2l6 -3t7 -2q15 0 20 30q2 15 19 50.5t30 53.5q19 26 36.5 39t70.5 39q32 15 73 15q81 0 139 -46q24 -18 33 -24q7 -5 16.5 -30t15 -46.5t5.5 -23.5z" /></svg>
+            لغة البساطة والاختزال الفلسفي
+          </span>
+          <span class="hero-meta-divider">•</span>
+          <span class="hero-meta-words">137 كلمة تختصر العالم</span>
+        </div>
+        <h1>اكتب، ترجِم، وعَبِّر بالرموز المصوّرة في <span>توكي بونا</span></h1>
+        <p class="hero-lead">ابتكرتها اللغوية الكندية سونيا لانغ عام 2001 كلغة فلسفية مصغّرة مستوحاة من فلسفة البساطة لتهدئة العقل وتفكيك الأفكار المعقدة إلى مفاهيم نقية وتدوينها برموز Sitelen Pona الهيروغليفية. استكشف الأدوات التفاعلية:</p>
+      </div>
+
+      <!-- Feature Grid: Content-Driven Asymmetric Hub -->
+      <div class="hub-layout">
+        <!-- Main Featured Card: Converter & Glyph Studio -->
+        <div class="feature-card featured" onclick="switchTab('converter')">
+          <div class="feature-card-content">
+            <div class="feature-card-badge">الأداة الرئيسية المصوّرة</div>
+            <div class="feature-header-row">
+              <div class="feature-icon-box">
+                <svg viewBox="-10 0 768 1000" width="30" height="30" style="fill:currentColor;"><path fill="currentColor" d="M487 403q0 -9 1.5 -15.5t12.5 -14.5t32 -8q14 0 21.5 9.5t8.5 19.5l1 10q0 15 -10 24.5t-27 9.5q-22 0 -31 -8t-9 -27zM336 394q0 -33 37 -33q24 0 37 26q5 10 5 14.5t-7 12.5q-12 16 -39 16q-15 0 -23 -9t-9 -18zM206 392q0 -8 11.5 -21.5t23.5 -13.5q15 0 30.5 13 t15.5 26q0 31 -49 31q-12 0 -22 -15t-10 -20zM97 639l1 -14v-31v-24q0 -68 -3 -71q-1 -1 3 -12.5t-1 -18.5t-5 -41q0 -15 3.5 -67.5t4.5 -121.5q1 -66 5 -92.5t17 -42.5q9 -12 17 -12q7 0 40.5 11t52.5 14q25 3 99 3q238 0 295 -12q15 -4 30 10q14 12 14 35q0 30 -7.5 87 t-9.5 108q-2 59 -5 67q-2 6 1.5 11.5t1.5 14.5v18q0 66 8.5 138t8.5 81q0 25 -8.5 34.5t-29.5 9.5t-21 -3t-176 -13.5t-187 -10.5l-28 2q-29 3 -59.5 5.5t-36.5 2.5q-16 0 -20.5 -12.5t-4.5 -52.5zM594 393q0 -75 7 -108t7 -62q0 -12 -4 -28l-5 -19h-197q-193 0 -205 -3 q-7 -1 -13.5 -0.5t-10.5 3.5t-3 6q2 5 -2 9.5t-2 9.5q1 2 1 4q0 1 -1 3t-2.5 8t-2.5 16t-2 31.5t-1 50.5v19.5t0.5 25.5t1 25.5t0.5 20.5v8v4q0 4 -0.5 11t-1 17t-0.5 24.5v29.5q0 55 5 64q6 12 1 17q-6 6 -5 16.5t8 16.5q16 14 118 14q19 0 35 6t42 6q22 0 46.5 5.5 t44.5 5.5q5 0 37 -1t69.5 -3.5t40.5 -5.5q5 -5 5 -40q0 -31 -5 -49t-5 -41v-28q0 -14 -0.5 -32.5t-0.5 -56.5z" /></svg>
+              </div>
+              <div>
+                <h3>استوديو المحوّل ورموز Sitelen Pona</h3>
+                <p>اكتب أي جملة أو فكرة ليتم تفكيكها نحوياً ورسمها فوراً برموز Sitelen Pona الهيروغليفية الأصلية، مع خيارات التحكم الكاملة في الألوان والخلفيات وتصدير الصور عالية الدقة (SVG / PNG).</p>
+              </div>
+            </div>
+
+            <!-- Live Glyphs Sample Ribbon -->
+            <div class="glyph-sample-ribbon" title="عينة حية من رموز Sitelen Pona الأصلية">
+              <div class="sample-glyph-item">
+                <svg viewBox="-10 0 738 1000" width="30" height="30" style="fill:currentColor;"><path fill="currentColor" d="M135 505q0 -35 12.5 -60.5t12.5 -26.5q0 -13 19 -39.5t34 -34.5q17 -9 25.5 -19t10 -16t8.5 -11t23 -7q19 -3 34.5 -7.5t26.5 -4.5q17 0 59.5 9t52.5 9q12 0 32 7t37 14.5t19 8.5q13 4 13 10t7 10t7 8t6.5 10.5t15.5 18.5t14 25q10 24 12 26q4 4 4 18q0 8 2.5 16.5 t3.5 10.5t-1 6q-3 2 -5 11t-6.5 24.5t-13.5 28.5t-16 30.5t-17 27.5q-7 7 -9 12.5t-1.5 8.5t-3 6t-13.5 7q-19 8 -19 12q0 5 -21 13t-48 16t-34 11q-16 8 -47 8q-38 0 -68 -9t-44 -17.5t-15 -8.5q-8 0 -25 -9.5t-19 -14.5q-2 -8 -9 -10q-13 -5 -29 -50.5t-19 -47.5 q-8 -5 -8 -30zM497 372q-2 0 -13 -8t-37 -16.5t-66 -8.5q-34 0 -62.5 8.5t-44 17.5t-28.5 23.5t-15 18.5t-5 9q-4 10 -10 10q-5 0 -12.5 22.5t-7.5 38.5q0 24 31 77t64 59q20 4 25 7q14 7 58 7q36 0 50.5 -6t16.5 -6q5 0 20.5 -5.5t40 -25t38.5 -48.5q22 -46 22 -64 q0 -31 -10 -52q-6 -13 -27.5 -35.5t-27.5 -22.5zM57 188q0 -10 7.5 -20.5t21.5 -10.5q9 0 30 18.5t25 18.5q3 0 7 7t9 7t15 13t10 24q0 10 -8.5 15.5t-17.5 6.5l-8 1q-9 0 -27.5 -18.5t-25.5 -18.5q-6 0 -11 -7t-9 -7q-18 -12 -18 -29zM536 164q22 -9 54 -35.5t49 -26.5 q31 0 31 31q0 13 -4.5 18.5t-17.5 12.5t-34.5 21t-38 23.5t-23.5 11.5q-10 3 -15.5 7t-14.5 4q-29 0 -29 -20q0 -12 12.5 -26t30.5 -21zM314 200q0 -1 3 -15t6 -37t3 -45q0 -9 -2 -15q-5 -17 18 -30q19 -9 20 2q0 6 10 10q8 2 8 22q0 35 -5 56.5t-5 43.5q0 13 -12.5 25 t-24.5 12q-19 0 -19 -29z" /></svg>
+                <span>toki (لغة)</span>
+              </div>
+              <div class="sample-glyph-item">
+                <svg viewBox="-10 0 738 1000" width="30" height="30" style="fill:currentColor;"><path fill="currentColor" d="M576 365q0 -42 44 -42q34 0 34 24q0 4 -1 13t-7.5 32.5t-17.5 46.5t-35 53.5t-56 55.5q-7 6 -56.5 25t-57.5 19q-7 0 -33 2t-37 2q-35 0 -67 -10t-52.5 -20.5t-26.5 -10.5t-6 -5q0 -4 -19 -23t-24 -19q-4 0 -25.5 -31t-21.5 -37q0 -4 -5 -9.5t-9 -19.5q-3 -10 -14.5 -37 t-11.5 -34q0 -4 7 -19.5t14 -15.5q3 0 8 6q3 3 5 2l6 -3t7 -2q15 0 20 30q2 15 19 50.5t30 53.5q19 26 36.5 39t70.5 39q32 15 73 15q81 0 139 -46q24 -18 33 -24q7 -5 16.5 -30t15 -46.5t5.5 -23.5z" /></svg>
+                <span>pona (خير)</span>
+              </div>
+              <div class="sample-glyph-item">
+                <svg viewBox="-10 0 777 1000" width="30" height="30" style="fill:currentColor;"><path fill="currentColor" d="M278 128q3 0 13 -6t37 -12.5t71 -6.5q24 0 87 7q36 4 44.5 7.5t24.5 19.5q22 22 22 25q0 4 7 4t7 4t21 20t21 19q0 2 5.5 14.5t12 28.5t8.5 27q3 18 7 20q4 3 4 53q0 28 -1.5 43t-3.5 17t-3 5t-1 9q0 9 -7 16.5t-7 11.5q0 5 -30.5 45t-30.5 44t26 32.5t26 30.5t16 21.5 t16 26.5q0 6 17.5 26.5t17.5 34.5q0 35 -21 35q-23 0 -33.5 -9t-10.5 -18q0 -5 -18 -26t-18 -23q-4 -9 -24.5 -33.5t-41.5 -45t-25 -20.5l-3 2.5t-12 6.5t-24 6q-6 1 -13 3.5t-20.5 4t-39.5 1.5q-53 0 -95 -5t-50 -5q-11 0 -20 10t-16 21t-12 13q-6 1 -6 11q0 5 -2 8t-8 8.5 t-11 13.5t-16 20.5t-18.5 22.5t-8.5 17q-4 15 -8 15q-5 0 -18.5 -2.5t-26 -6t-13.5 -4.5q-4 -3 -5 -21q-2 -12 0.5 -17t13.5 -13q22 -17 40.5 -37.5t23.5 -31.5q0 -2 14.5 -31.5t18.5 -31.5q4 -3 4 -6t-12 -11t-13.5 -14t-19 -27.5t-17.5 -23.5t-7 -11q-8 -7 -16 -38t-8 -49 v-5.5t0.5 -13t0.5 -12.5q0 -17 19 -52.5t27 -38.5q12 -5 25.5 -29t16.5 -24q1 0 45 -35t55 -35zM503 184q-23 -12 -40.5 -15t-69.5 -3q-30 0 -42 6.5t-27 6.5q-35 0 -79.5 31t-76 75.5t-31.5 79.5q0 13 9 26.5t9 18.5q0 7 19.5 29.5t29.5 26.5q7 3 16.5 17t16.5 15 q9 2 25.5 9.5t24.5 14.5q7 7 33.5 12.5t53 7.5t45.5 2q31 0 56.5 -10t39 -20.5t15.5 -10.5q6 0 17 -9t11 -14q0 -2 2 -4t6 -5t12 -15t18 -31q11 -24 14.5 -34t3.5 -24q0 -22 -3.5 -38t-7.5 -25.5t-14 -31.5q-13 -26 -22 -38.5t-12.5 -13t-7.5 -2.5t-7 -9q-4 -8 -37 -25z" /></svg>
+                <span>jan (إنسان)</span>
+              </div>
+              <div class="sample-glyph-item">
+                <svg viewBox="-10 0 873 1000" width="30" height="30" style="fill:currentColor;"><path fill="currentColor" d="M394 534q0 -5 -3.5 -14.5t-3.5 -13.5q0 -1 3 -10t4 -26l1 -26l-28 -3q-7 -1 -27 -1q-76 0 -76 7q0 3 -35 1q-8 -1 -20 -1q-17 0 -33 9.5t-32 9.5q-20 0 -31 -11.5t-11 -21.5t-1 -12.5t-9 -7.5q-7 -6 -9 -11t0 -19q2 -15 8.5 -31t6.5 -44q0 -22 -2.5 -99.5t-6.5 -83.5 q-2 -4 0 -13t-2 -13q-8 -10 -8 -23q0 -6 2 -13t12.5 -15.5t28.5 -8.5q25 0 25 -4q0 -5 4 -3q3 1 130 7.5t133 6.5q20 0 43 -3t39 -3q23 0 61.5 4.5t56.5 4.5q14 0 54 -2t53 -2q23 0 32 14t10 64q6 183 8.5 221t10.5 53q5 12 5 20q0 19 -15 25t-55 6q-42 0 -117.5 -7.5 t-101.5 -7.5q-17 0 -24.5 1t-9 3t-1.5 6q0 11 -2.5 46t-2.5 54q0 40 6 73t12 50.5t6 22.5q0 9 -9.5 23.5t-28.5 14.5q-22 0 -36 -18t-16 -47l-2 -22q-1 -21 -2.5 -44t-1.5 -26q0 -16 4 -25t4 -11zM370 102q-24 -4 -82 -4q-33 0 -53.5 3t-36.5 4q-29 1 -35.5 12.5t-10.5 64.5 q-3 45 -3 82q0 59 8 73q6 18 8 26l6 22l38 -2q42 -2 97 -2q46 0 76 -3l17 -2l-2 -76q-2 -76 -2 -92q0 -22 1 -36t2 -19t1 -7q0 -3 -4 -18q-4 -16 -7.5 -20t-17.5 -6zM708 362q0 -3 -1.5 -7t-3.5 -6.5t-3 -5t0.5 -3.5t5.5 -1q10 0 10 -18q0 -5 -4 -36t-6 -70q-4 -72 -13 -87 t-52 -17q-19 -1 -34 -4t-16 -4t-5 1q-1 2 -41 2h-20l-57 -1l-2 25q-1 19 -6 42.5t-5 25.5l1 10q0 11 1 28t2.5 38t2 47t0.5 50q0 6 22 3q12 -2 51 -2q14 0 34 1t39 2t35.5 2.5t26.5 2.5l11 1q27 0 27 -19z" /></svg>
+                <span>ilo (أداة)</span>
+              </div>
+            </div>
+          </div>
+          <div class="feature-footer">
+            <span class="feature-btn-label">
+              <span>فتح المحوّل ورسم الرموز</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Secondary Card 1: Translator -->
+        <div class="feature-card" onclick="switchTab('translator')">
+          <div class="feature-card-content">
+            <div class="feature-header-row">
+              <div class="feature-icon-box accent">
+                <svg viewBox="-10 0 738 1000" width="28" height="28" style="fill:currentColor;"><path fill="currentColor" d="M135 505q0 -35 12.5 -60.5t12.5 -26.5q0 -13 19 -39.5t34 -34.5q17 -9 25.5 -19t10 -16t8.5 -11t23 -7q19 -3 34.5 -7.5t26.5 -4.5q17 0 59.5 9t52.5 9q12 0 32 7t37 14.5t19 8.5q13 4 13 10t7 10t7 8t6.5 10.5t15.5 18.5t14 25q10 24 12 26q4 4 4 18q0 8 2.5 16.5 t3.5 10.5t-1 6q-3 2 -5 11t-6.5 24.5t-13.5 28.5t-16 30.5t-17 27.5q-7 7 -9 12.5t-1.5 8.5t-3 6t-13.5 7q-19 8 -19 12q0 5 -21 13t-48 16t-34 11q-16 8 -47 8q-38 0 -68 -9t-44 -17.5t-15 -8.5q-8 0 -25 -9.5t-19 -14.5q-2 -8 -9 -10q-13 -5 -29 -50.5t-19 -47.5 q-8 -5 -8 -30zM497 372q-2 0 -13 -8t-37 -16.5t-66 -8.5q-34 0 -62.5 8.5t-44 17.5t-28.5 23.5t-15 18.5t-5 9q-4 10 -10 10q-5 0 -12.5 22.5t-7.5 38.5q0 24 31 77t64 59q20 4 25 7q14 7 58 7q36 0 50.5 -6t16.5 -6q5 0 20.5 -5.5t40 -25t38.5 -48.5q22 -46 22 -64 q0 -31 -10 -52q-6 -13 -27.5 -35.5t-27.5 -22.5zM57 188q0 -10 7.5 -20.5t21.5 -10.5q9 0 30 18.5t25 18.5q3 0 7 7t9 7t15 13t10 24q0 10 -8.5 15.5t-17.5 6.5l-8 1q-9 0 -27.5 -18.5t-25.5 -18.5q-6 0 -11 -7t-9 -7q-18 -12 -18 -29zM536 164q22 -9 54 -35.5t49 -26.5 q31 0 31 31q0 13 -4.5 18.5t-17.5 12.5t-34.5 21t-38 23.5t-23.5 11.5q-10 3 -15.5 7t-14.5 4q-29 0 -29 -20q0 -12 12.5 -26t30.5 -21zM314 200q0 -1 3 -15t6 -37t3 -45q0 -9 -2 -15q-5 -17 18 -30q19 -9 20 2q0 6 10 10q8 2 8 22q0 35 -5 56.5t-5 43.5q0 13 -12.5 25 t-24.5 12q-19 0 -19 -29z" /></svg>
+              </div>
+              <div>
+                <h3>المترجم الذكي ثنائي الاتجاه</h3>
+                <p>ترجمة دلالية من العربية والإنجليزية إلى التوكي بونا مع تطبيق قواعد الإسناد (li) والمفعول به (e) والسياق (la) ونقل النتيجة بضغطة واحدة إلى استوديو الرموز.</p>
+              </div>
+            </div>
+          </div>
+          <div class="feature-footer">
+            <span class="feature-btn-label">
+              <span>فتح المترجم الفوري</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Secondary Card 2: Dictionary -->
+        <div class="feature-card" onclick="switchTab('dictionary')">
+          <div class="feature-card-content">
+            <div class="feature-header-row">
+              <div class="feature-icon-box terracotta">
+                <svg viewBox="-10 0 831 1000" width="28" height="28" style="fill:currentColor;"><path fill="currentColor" d="M421 713q-116 0 -145 5t-54 5h-28.5t-24.5 0.5t-18 1t-13 0.5h-4q-23 0 -40 -18l-16 -18l8 -24q8 -22 10.5 -80t3 -107t3.5 -52q2 -2 2 -28l-1 -33q-1 -33 -2 -81t-1 -80l-1 -101l26 -26l86 3q55 2 97 2h4q4 0 11.5 -0.5t18.5 -0.5h28t37.5 -0.5t50 -0.5h61.5h20.5 t24.5 0.5t22 1t17 0.5h7q19 0 33.5 -1.5t20 -3t9.5 -3t7 -1.5q2 0 10 2t11 2q7 0 14.5 19t7.5 35q0 6 -2 12.5t-2 11.5t2.5 19.5t2.5 38.5q0 15 -1.5 41t-3.5 52.5t-4 50.5t-4 40l-1 16q0 5 1 12t1 14q0 12 -1 21q0 2 -0.5 7t-0.5 8q0 36 7.5 92t16.5 80q10 26 4 32 q-3 4 -2 10.5t-3 9.5q-9 8 -123.5 11.5t-160.5 3.5zM647 489q0 -19 2 -53.5t4.5 -69.5t5.5 -67.5t5 -54.5l2 -21q0 -11 -5 -24.5t-7 -29.5l-4 -22l-40 -1q-53 -1 -275 -1q-145 0 -151 1q-13 1 -16 12q-6 21 -6 184q0 29 0.5 56.5t1 46t0.5 32v21.5l1 7q0 14 -5.5 43t-5.5 73 q0 21 9 26t54 5q35 0 35 -3q0 -2 50 -2h33.5t28.5 0.5t23 1t18.5 1t12.5 1t8 0.5h3q19 0 59.5 -5.5t64.5 -5.5q6 0 13 0.5t14 0.5q26 0 55.5 -4.5t29.5 -8.5q0 -2 -9 -53.5t-9 -85.5z" /></svg>
+              </div>
+              <div>
+                <h3>معجم الـ 137 كلمة الرسمي</h3>
+                <p>مرجع شامل لكافة مفردات اللغة الأصلية الـ 120 من كتاب pu بالإضافة إلى 17 كلمة معتمدة من ku suli، مصنفة حسب المعنى مع سماع النطق الصوتي البشري لكل كلمة وإضافتها لمحررك بنقرة واحدة.</p>
+              </div>
+            </div>
+          </div>
+          <div class="feature-footer">
+            <span class="feature-btn-label">
+              <span>تصفح المعجم الكامل</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linguistic Facts Banner -->
+      <div class="facts-bar">
+        <div class="fact-item">
+          <span class="fact-num">120</span>
+          <span class="fact-desc">كلمة أصلية معتمدة (كتاب pu)</span>
+        </div>
+        <div class="fact-divider"></div>
+        <div class="fact-item">
+          <span class="fact-num">17</span>
+          <span class="fact-desc">كلمة إضافية شائعة (معجم ku)</span>
+        </div>
+        <div class="fact-divider"></div>
+        <div class="fact-item">
+          <span class="fact-num">100%</span>
+          <span class="fact-desc">رموز فيكتور دقيقة Sitelen Pona</span>
+        </div>
+        <div class="fact-divider"></div>
+        <div class="fact-item">
+          <span class="fact-num">Linku</span>
+          <span class="fact-desc">تسجيلات صوتية بشرية حقيقية</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 1: Converter & Sitelen Pona Stage -->
+    <section id="sec-converter" class="view-section">
+      <div class="main-grid">
+        <div class="card">
+          <div class="card-title">
+            <span class="label-accent">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              <span>نص التوكي بونا</span>
+            </span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-primary" style="padding: 5px 12px; font-size: 0.82rem;" onclick="speakTokiPona()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <span>استماع</span>
+              </button>
+              <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="clearText()">مسح</button>
+            </div>
+          </div>
+          <textarea id="tpInput" placeholder="اكتب بالتوكي بونا هنا... مثلاً: mi wile kama jo e ilo tawa">mi wile kama jo e ilo tawa</textarea>
+
+          <div class="quick-examples">
+            <button class="chip" onclick="setExample('toki pona')">toki pona</button>
+            <button class="chip" onclick="setExample('ma ale')">ma ale</button>
+            <button class="chip" onclick="setExample('pona mute')">pona mute</button>
+            <button class="chip" onclick="setExample('mi jan Youssef')">mi jan Youssef</button>
+            <button class="chip" onclick="setExample('jan pona mi li toki kepeken ilo toki')">jan pona mi li toki kepeken ilo toki</button>
+            <button class="chip" onclick="setExample('tenpo pimeja la mi lukin e mun')">tenpo pimeja la mi lukin e mun</button>
+          </div>
+
+          <div class="translation-box">
+            <div class="translation-label">المعنى الدلالي بالعربية:</div>
+            <div class="translation-result" id="semanticOutput">أنا أريد شراء دراجة</div>
+            <div class="translation-note" id="grammarNote">الفاعل: أنا | الفعل/الخبر: أريد شراء | المفعول به: دراجة</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="label-accent">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
+              <span>رموز Sitelen Pona المصوّرة</span>
+            </span>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">انقر على أي رمز لسماع نطقه الصوتي</span>
+          </div>
+
+          <div class="controls-bar">
+            <div class="control-group">
+              <label>الخلفية:</label>
+              <div class="segmented-control" id="bgModeSegmented">
+                <button type="button" class="segment-btn active" data-val="bg-transparent" onclick="setBgMode('bg-transparent', this)">شفافة</button>
+                <button type="button" class="segment-btn" data-val="bg-dark" onclick="setBgMode('bg-dark', this)">داكنة</button>
+                <button type="button" class="segment-btn" data-val="bg-light" onclick="setBgMode('bg-light', this)">بيضاء</button>
+              </div>
+              <select id="bgMode" style="display:none;" onchange="updatePreview()">
+                <option value="bg-transparent" selected>شفافة</option>
+                <option value="bg-dark">داكنة</option>
+                <option value="bg-light">بيضاء</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="glyphColor">اللون:</label>
+              <div class="color-picker-wrapper" title="اختر لون الرموز">
+                <input type="color" id="glyphColor" value="#F5C518" onchange="updatePreview(); syncColorSwatch(this.value);" />
+                <span class="color-swatch-indicator" id="colorSwatchIndicator" style="background:#F5C518;"></span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="glyphSize">الحجم: <span id="sizeValueDisplay" class="size-val">58px</span></label>
+              <input type="range" id="glyphSize" min="36" max="96" value="58" oninput="document.getElementById('sizeValueDisplay').textContent = this.value + 'px'; updatePreview();" />
+            </div>
+
+            <div class="control-group">
+              <label class="toggle-control">
+                <input type="checkbox" id="showLabels" checked onchange="updatePreview()" />
+                <span class="toggle-label">الكلمات اللاتينية</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="preview-stage bg-transparent" id="previewStage"></div>
+
+          <div class="actions-row">
+            <button class="btn btn-primary" onclick="speakTokiPona()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              <span>استماع</span>
+            </button>
+            <button class="btn btn-secondary" onclick="downloadPNG()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>تحميل PNG</span>
+            </button>
+            <button class="btn btn-secondary" onclick="downloadSVG()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>تحميل SVG</span>
+            </button>
+            <button class="btn btn-secondary" onclick="copyTranslation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>نسخ الترجمة</span>
+            </button>
+          </div>
+
+          <div class="breakdown-bar" id="breakdownBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Multi-Language Translator Hub -->
+    <section id="sec-translator" class="view-section">
+      <div class="hub-grid">
+        <!-- Arabic to Toki Pona (RTL) -->
+        <div class="sub-box ar-card" dir="rtl" style="text-align: right;">
+          <div class="sub-box-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="sub-box-title" style="color: var(--primary);">من العربية إلى توكي بونا</span>
+              <span class="lang-tag">عربي ← TP</span>
+            </div>
+            <button class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="translateArabicToTP()">ترجم</button>
+          </div>
+          <textarea id="arToTpInput" class="rtl-area" style="height: 110px;" placeholder="اكتب جملتك بالعربية هنا...">هذا أفضل شيء في العالم</textarea>
+          <div class="quick-examples">
+            <button class="chip rtl-chip" onclick="setArExample('هذا أفضل شيء في العالم')">هذا أفضل شيء في العالم</button>
+            <button class="chip rtl-chip" onclick="setArExample('أنا أحب تعلم اللغات')">أنا أحب تعلم اللغات</button>
+            <button class="chip rtl-chip" onclick="setArExample('أين المدرسة؟')">أين المدرسة؟</button>
+            <button class="chip rtl-chip" onclick="setArExample('أريد شراء دراجة أسرع')">دراجة أسرع</button>
+          </div>
+          <div class="result-strip">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">النتيجة بالتوكي بونا:</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.78rem;" onclick="speakText(document.getElementById('arTpResult').textContent)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  <span>استماع</span>
+                </button>
+                <button class="btn btn-primary" style="padding:4px 10px; font-size:0.78rem;" onclick="sendToStage('arTpResult')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
+                  <span>عرض الرموز</span>
+                </button>
+              </div>
+            </div>
+            <div class="tp-generated" id="arTpResult">ni li ijo pona mute lon ma ale</div>
+            <div class="bridge-info" id="arBridgeNote">English pivot: This is the best thing in the world</div>
+          </div>
+        </div>
+
+        <!-- English to Toki Pona (LTR explicitly) -->
+        <div class="sub-box en-card" dir="ltr" style="text-align: left;">
+          <div class="sub-box-header" style="flex-direction: row;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="sub-box-title" style="color: var(--primary);">English to Toki Pona</span>
+              <span class="lang-tag">EN → TP</span>
+            </div>
+            <button class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="translateEnglishToTP()">Translate</button>
+          </div>
+          <textarea id="enToTpInput" style="height: 110px;" placeholder="Write in English...">This is better for the world</textarea>
+          <div class="quick-examples">
+            <button class="chip" onclick="setEnExample('This is better for the world')">This is better for the world</button>
+            <button class="chip" onclick="setEnExample('My friend is very smart')">My friend is very smart</button>
+            <button class="chip" onclick="setEnExample('I want a bigger house')">I want a bigger house</button>
+            <button class="chip" onclick="setEnExample('What is your name?')">What is your name?</button>
+          </div>
+          <div class="result-strip">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Toki Pona translation:</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.78rem;" onclick="speakText(document.getElementById('enTpResult').textContent)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  <span>Listen</span>
+                </button>
+                <button class="btn btn-primary" style="padding:4px 10px; font-size:0.78rem;" onclick="sendToStage('enTpResult')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
+                  <span>Show Glyphs</span>
+                </button>
+              </div>
+            </div>
+            <div class="tp-generated" id="enTpResult">ni li pona mute tawa ma ale</div>
+            <div class="bridge-info" id="enBridgeNote">Direct semantic translation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Full 137 Dictionary -->
+    <section id="sec-dictionary" class="view-section">
+      <div class="card">
+        <div class="dict-header">
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary);">القاموس الرسمي الكامل (137 كلمة)</h2>
+          <div class="search-input-wrapper">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="dictSearch" class="search-input" placeholder="ابحث بالكلمة أو بالمعنى العربي..." oninput="renderDictionary()" />
+          </div>
+        </div>
+
+        <div class="cat-tabs" id="catTabs">
+          <button class="cat-btn active" onclick="setCategory('all', this)">الكل (137)</button>
+          <button class="cat-btn" onclick="setCategory('grammar', this)">القواعد والضمائر</button>
+          <button class="cat-btn" onclick="setCategory('actions', this)">الأفعال والحركة</button>
+          <button class="cat-btn" onclick="setCategory('nature', this)">الطبيعة والحيوانات</button>
+          <button class="cat-btn" onclick="setCategory('objects', this)">الأدوات والأماكن</button>
+          <button class="cat-btn" onclick="setCategory('qualities', this)">الصفات والألوان</button>
+          <button class="cat-btn" onclick="setCategory('ku', this)">كلمات ku</button>
+        </div>
+
+        <div class="dict-grid" id="dictGrid"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast">تم النسخ</div>
+
+  <script>
+    // Navigation & Burger Menu Logic
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      const btn = document.getElementById("burgerBtn");
+      menu.classList.toggle("open");
+      btn.classList.toggle("open");
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+      const targetSec = document.getElementById(`sec-${tabName}`);
+      if (targetSec) targetSec.classList.add("active");
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === tabName);
+      });
+
+      const mMenu = document.getElementById("mobileMenu");
+      const bBtn = document.getElementById("burgerBtn");
+      if (mMenu) mMenu.classList.remove("open");
+      if (bBtn) bBtn.classList.remove("open");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setBgMode(val, btn) {
+      const sel = document.getElementById("bgMode");
+      if (sel) sel.value = val;
+      document.querySelectorAll("#bgModeSegmented .segment-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      updatePreview();
+    }
+
+    function syncColorSwatch(hex) {
+      const sw = document.getElementById("colorSwatchIndicator");
+      if (sw) sw.style.background = hex;
+    }
+    const DICTIONARY = [
+      { w: "a", ar: "آه / تعجب / تأكيد", cat: "grammar" },
+      { w: "ala", ar: "لا / غير / صفر / لا شيء", cat: "grammar" },
+      { w: "ale", ar: "كل / جميع / الكون / 100", cat: "grammar" },
+      { w: "ali", ar: "كل / جميع (مرادف ale)", cat: "grammar" },
+      { w: "anu", ar: "أو / اختيار", cat: "grammar" },
+      { w: "en", ar: "و (بين فاعلين)", cat: "grammar" },
+      { w: "e", ar: "أداة المفعول به المباشر", cat: "grammar" },
+      { w: "ijo", ar: "شيء / أمر / كائن / مادة", cat: "objects" },
+      { w: "ike", ar: "سيء / معقد / صعب", cat: "qualities" },
+      { w: "insa", ar: "داخل / بطن / وسط", cat: "objects" },
+      { w: "kepeken", ar: "باستخدام / بواسطة", cat: "grammar" },
+      { w: "la", ar: "إذا / عندما / في سياق...", cat: "grammar" },
+      { w: "li", ar: "أداة ربط الفاعل بالخبر", cat: "grammar" },
+      { w: "lon", ar: "في / على / موجود / حقيقي", cat: "grammar" },
+      { w: "mi", ar: "أنا / نحن", cat: "grammar" },
+      { w: "mu", ar: "صوت حيوان / مواء / زئير", cat: "nature" },
+      { w: "ni", ar: "هذا / هذه / ذلك", cat: "grammar" },
+      { w: "o", ar: "يا (للنداء) / فـ (للأمر)", cat: "grammar" },
+      { w: "ona", ar: "هو / هي / هم", cat: "grammar" },
+      { w: "pi", ar: "ذو / خاص بـ (تجميع الصفات)", cat: "grammar" },
+      { w: "pona", ar: "جيد / بسيط / لطيف / يصلح", cat: "qualities" },
+      { w: "sama", ar: "نفس / مثل / متشابه / أخ", cat: "qualities" },
+      { w: "seme", ar: "ماذا / أي / أداة استفهام", cat: "grammar" },
+      { w: "sina", ar: "أنت / أنتم", cat: "grammar" },
+      { w: "tan", ar: "من / بسبب / أصل", cat: "grammar" },
+      { w: "taso", ar: "فقط / لكن / وحيد", cat: "grammar" },
+      { w: "tawa", ar: "إلى / يذهب / يتحرك", cat: "actions" },
+      { w: "toki", ar: "يتكلم / لغة / مرحباً / تواصل", cat: "actions" },
+      { w: "alasa", ar: "يصطاد / يبحث / يجمع", cat: "actions" },
+      { w: "awen", ar: "ينتظر / يبقى / يحمي", cat: "actions" },
+      { w: "jaki", ar: "قذر / مقزز / نفايات", cat: "qualities" },
+      { w: "jo", ar: "يملك / يحمل / لديه", cat: "actions" },
+      { w: "kalama", ar: "صوت / ضجيج / يعزف", cat: "actions" },
+      { w: "kama", ar: "يأتي / يصل / يصبح", cat: "actions" },
+      { w: "ken", ar: "يستطيع / ممكن / قدرة", cat: "actions" },
+      { w: "kute", ar: "يسمع / أذن / يطيع", cat: "actions" },
+      { w: "lape", ar: "ينام / يرتاح", cat: "actions" },
+      { w: "lukin", ar: "يرى / ينظر / عين / يقرأ", cat: "actions" },
+      { w: "moku", ar: "يأكل / يشرب / طعام", cat: "actions" },
+      { w: "moli", ar: "ميت / يموت / يقتل", cat: "actions" },
+      { w: "musi", ar: "يلعب / ممتع / فن / ترفيه", cat: "actions" },
+      { w: "open", ar: "يفتح / يبدأ / بداية", cat: "actions" },
+      { w: "pakala", ar: "مكسور / خطأ / حادث / يدمّر", cat: "actions" },
+      { w: "pali", ar: "يعمل / يصنع / يفعل / مشروع", cat: "actions" },
+      { w: "pana", ar: "يعطي / يرسل / يضع / يطلق", cat: "actions" },
+      { w: "pilin", ar: "يشعر / قلب / عاطفة / يفكر", cat: "actions" },
+      { w: "pini", ar: "ينهي / نهاية / ماضٍ / مغلق", cat: "actions" },
+      { w: "sona", ar: "يعرف / علم / حكمة / معلومة", cat: "actions" },
+      { w: "unpa", ar: "علاقة حميمية / زواج", cat: "actions" },
+      { w: "utala", ar: "يقاتل / صراع / ينافس / حرب", cat: "actions" },
+      { w: "wile", ar: "يريد / يحتاج / يجب / رغبة", cat: "actions" },
+      { w: "akesi", ar: "زواحف / برمائيات / سحلية", cat: "nature" },
+      { w: "anpa", ar: "أسفل / تحت / متواضع / أرض", cat: "nature" },
+      { w: "jan", ar: "شخص / إنسان / بشري", cat: "nature" },
+      { w: "kala", ar: "سمكة / مخلوق بحري", cat: "nature" },
+      { w: "kasi", ar: "نبات / شجرة / عشب / ورقة", cat: "nature" },
+      { w: "kili", ar: "فاكهة / خضار / ثمرة", cat: "nature" },
+      { w: "kiwen", ar: "حجر / صلب / معدن / صخرة", cat: "nature" },
+      { w: "ko", ar: "طين / مسحوق / عجين / رمل", cat: "nature" },
+      { w: "kon", ar: "هواء / ريح / روح / غاز", cat: "nature" },
+      { w: "kule", ar: "لون / ملون / يصبغ", cat: "qualities" },
+      { w: "kulupu", ar: "مجموعة / مجتمع / فريق", cat: "nature" },
+      { w: "ma", ar: "أرض / بلد / عالم / تراب", cat: "nature" },
+      { w: "mama", ar: "أب / أم / والد / خالق / مؤسس", cat: "nature" },
+      { w: "mani", ar: "مال / عملة / ثروة / ماشية", cat: "objects" },
+      { w: "meli", ar: "امرأة / أنثى / زوجة", cat: "nature" },
+      { w: "mije", ar: "رجل / ذكر / زوج", cat: "nature" },
+      { w: "mun", ar: "قمر / نجم / جرم سماوي", cat: "nature" },
+      { w: "pipi", ar: "حشرة / عنكبوت / نملة", cat: "nature" },
+      { w: "sewi", ar: "سماء / أعلى / مقدس / إلهي", cat: "nature" },
+      { w: "sijelo", ar: "جسم / جسد / حالة صحية", cat: "nature" },
+      { w: "soweli", ar: "حيوان ثديي / حيوان أليف", cat: "nature" },
+      { w: "suno", ar: "شمس / ضوء / سطوع / نهار", cat: "nature" },
+      { w: "telo", ar: "ماء / سائل / مشروب / يغسل", cat: "nature" },
+      { w: "waso", ar: "طائر / مخلوق مجنح", cat: "nature" },
+      { w: "esun", ar: "سوق / متجر / تجارة / بيع", cat: "objects" },
+      { w: "ilo", ar: "أداة / آلة / جهاز", cat: "objects" },
+      { w: "len", ar: "ملابس / قماش / غطاء", cat: "objects" },
+      { w: "lipu", ar: "ورقة / كتاب / شاشة / موقع", cat: "objects" },
+      { w: "luka", ar: "يد / ذراع / خمسة (5)", cat: "objects" },
+      { w: "lupa", ar: "باب / نافذة / فتحة / ثقب", cat: "objects" },
+      { w: "monsi", ar: "خلف / ظهر / وراء", cat: "objects" },
+      { w: "nasin", ar: "طريق / منهج / أسلوب / ثقافة", cat: "objects" },
+      { w: "nena", ar: "جبل / أنف / نتوء / زر", cat: "objects" },
+      { w: "noka", ar: "قدم / ساق / أسفل / مشي", cat: "objects" },
+      { w: "palisa", ar: "عصا / قضيب / شيء طويل", cat: "objects" },
+      { w: "pan", ar: "خبز / حبوب / أرز / معكرونة", cat: "objects" },
+      { w: "poka", ar: "جانب / بجانب / قرب", cat: "objects" },
+      { w: "poki", ar: "صندوق / كوب / وعاء / حقيبة", cat: "objects" },
+      { w: "selo", ar: "جلد / قشرة / سطح خارجي / حدود", cat: "objects" },
+      { w: "sinpin", ar: "وجه / أمام / جدار / صدر", cat: "objects" },
+      { w: "sitelen", ar: "صورة / رمز / رسم / كتابة", cat: "objects" },
+      { w: "supa", ar: "طاولة / سرير / سطح أفقي", cat: "objects" },
+      { w: "tenpo", ar: "وقت / زمن / لحظة / فترة", cat: "objects" },
+      { w: "tomo", ar: "بيت / غرفة / مبنى / مكان داخلي", cat: "objects" },
+      { w: "uta", ar: "فم / شفتان / قبلة / مدخل", cat: "objects" },
+      { w: "jelo", ar: "أصفر / ذهبي / فاتح", cat: "qualities" },
+      { w: "laso", ar: "أزرق / أخضر", cat: "qualities" },
+      { w: "lete", ar: "بارد / ثلج / نيء", cat: "qualities" },
+      { w: "lili", ar: "صغير / قليل / شاب / قصير", cat: "qualities" },
+      { w: "linja", ar: "خط / خيط / شعر / حبل", cat: "qualities" },
+      { w: "loje", ar: "أحمر / وردي", cat: "qualities" },
+      { w: "mute", ar: "كثير / عدة / عدد / كمية", cat: "qualities" },
+      { w: "nanpa", ar: "رقم / عدد / ترتيب (-th)", cat: "qualities" },
+      { w: "nasa", ar: "غريب / مجنون / مرح / مخمور", cat: "qualities" },
+      { w: "olin", ar: "يحب (عاطفياً) / مودة / احترام", cat: "qualities" },
+      { w: "pimeja", ar: "أسود / مظلم / ليل / ظل", cat: "qualities" },
+      { w: "seli", ar: "نار / حار / دافئ / يطبخ", cat: "qualities" },
+      { w: "sike", ar: "دائرة / كرة / عجلة / سنة", cat: "qualities" },
+      { w: "sin", ar: "جديد / طازج / إضافي / مرة أخرى", cat: "qualities" },
+      { w: "suli", ar: "كبير / طويل / مهم / سمين", cat: "qualities" },
+      { w: "suwi", ar: "حلو / لطيف / جذاب / سكر", cat: "qualities" },
+      { w: "tu", ar: "اثنان (2) / يقسم", cat: "qualities" },
+      { w: "walo", ar: "أبيض / فاتح / شاحب", cat: "qualities" },
+      { w: "wan", ar: "واحد (1) / متحد / فرد", cat: "qualities" },
+      { w: "wawa", ar: "قوي / طاقة / واثق / مكثف", cat: "qualities" },
+      { w: "weka", ar: "بعيد / غائب / يزيل / يتجاهل", cat: "qualities" },
+      { w: "epiku", ar: "ملحمي / رائع / مذهل", cat: "ku" },
+      { w: "jasima", ar: "يعكس / مرآة / مقابل", cat: "ku" },
+      { w: "kijetesantakalu", ar: "راكون / ابن عرس / حيوان فروي", cat: "ku" },
+      { w: "kin", ar: "أيضاً / حقاً / بالفعل", cat: "ku" },
+      { w: "kipisi", ar: "يقطع / يقسم / قطعة", cat: "ku" },
+      { w: "kokosila", ar: "يتحدث لغة غير توكي بونا في مجتمعها", cat: "ku" },
+      { w: "ku", ar: "قاموس توكي بونا (كتاب ku)", cat: "ku" },
+      { w: "lanpan", ar: "يأخذ / يمسك / يستولي على", cat: "ku" },
+      { w: "leko", ar: "مربع / مكعب / درج / كتلة", cat: "ku" },
+      { w: "meso", ar: "متوسط / عادي / منتصف", cat: "ku" },
+      { w: "misikeke", ar: "دواء / علاج / طبي", cat: "ku" },
+      { w: "monsuta", ar: "خوف / وحش / خطر / قلق", cat: "ku" },
+      { w: "n", ar: "هممم / تفكير / تردد", cat: "ku" },
+      { w: "namako", ar: "توابل / إضافي / زخرفة / ملح", cat: "ku" },
+      { w: "oko", ar: "عين / بصر (مرادف lukin)", cat: "ku" },
+      { w: "pu", ar: "الكتاب الرسمي الأول لتوكي بونا", cat: "ku" },
+      { w: "soko", ar: "فطر / عيش الغراب", cat: "ku" },
+      { w: "tonsi", ar: "غير ثنائي الجندر / عابر / متنوع", cat: "ku" }
+    ];
+
+    const WORD_MAP = {};
+    DICTIONARY.forEach(item => { WORD_MAP[item.w] = item; });
+
+    // Linku Official Audio Map
+    const LINKU_AUDIO_MAP = {};
+
+    async function loadLinkuResources() {
+      const dot = document.getElementById("syncDot");
+      const txt = document.getElementById("syncText");
+      try {
+        const res = await fetch("https://api.linku.la/v1/words");
+        const data = await res.json();
+        Object.values(data).forEach(entry => {
+          const w = entry.word ? entry.word.toLowerCase() : null;
+          if (w && entry.audio && entry.audio.length > 0) {
+            LINKU_AUDIO_MAP[w] = entry.audio[0].link;
+          }
+        });
+        if (dot) dot.classList.add("online");
+        if (txt) txt.textContent = "الصوت متصل";
+      } catch (err) {
+        if (txt) txt.textContent = "صوت محلي";
+      }
+    }
+
+    const PHONETIC_MAP = {
+      y: "j", r: "l", g: "k", q: "k", c: "k", x: "s",
+      d: "t", z: "s", b: "p", f: "p", v: "w", h: "k"
+    };
+
+    function mapToTokiLetters(str) {
+      return str
+        .toLowerCase()
+        .split("")
+        .map(ch => PHONETIC_MAP[ch] || ch)
+        .filter(ch => /[aeijklmnopstuw]/.test(ch));
+    }
+
+    // High-Precision Sitelen Pona Glyph Renderer using window.SITELEN_GLYPHS from glyphs.js
+    function renderSingleGlyphSVG(wordLower, size, color) {
+      const glyphData = window.SITELEN_GLYPHS && window.SITELEN_GLYPHS[wordLower];
+      if (glyphData && glyphData.d) {
+        return `<svg viewBox="${glyphData.viewBox}" width="${size}" height="${size}" style="display:inline-block; vertical-align:middle; fill:${color}; flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><path fill="${color}" d="${glyphData.d}" /></svg>`;
+      }
+      // Clean fallback if glyphs.js hasn't loaded yet or word is unrecognized
+      return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="7"><circle cx="50" cy="50" r="34" stroke-dasharray="10 6"/></svg>`;
+    }
+
+    function createSVGElement(word, size, color) {
+      const clean = word.replace(/[.,!?;:"]/g, "");
+      if (!clean) return null;
+
+      if (/^[A-Z]/.test(clean)) {
+        const letters = mapToTokiLetters(clean);
+        const innerIcons = letters.map(ch => {
+          const match = DICTIONARY.find(d => d.w.startsWith(ch));
+          const wKey = match ? match.w : "a";
+          return renderSingleGlyphSVG(wKey, Math.round(size * 0.56), color);
+        }).join("");
+
+        return `<div class="cartouche-box" style="color:${color}; border-color:${color};">${innerIcons}</div>`;
+      }
+
+      return renderSingleGlyphSVG(clean.toLowerCase(), size, color);
+    }
+
+    // Semantic Compound Dictionary (Toki Pona -> Arabic)
+    const COMPOUNDS = {
+      "toki pona": "لغة توكي بونا / كلام طيب",
+      "toki ike": "كلام سيء / شتيمة",
+      "toki insa": "تفكير / حديث داخلي",
+      "toki utala": "جدال / نقاش حاد",
+      "ma ale": "العالم / الكون بأسره",
+      "ma ali": "العالم / الكون بأسره",
+      "pona mute": "أفضل / رائع / جيد جداً",
+      "ike mute": "أسوأ / فظيع / سيء جداً",
+      "suli mute": "أكبر / ضخم / عظيم",
+      "lili mute": "أصغر / ضئيل جداً",
+      "wawa mute": "أقوى / أسرع / خارق",
+      "ilo tawa": "دراجة / مركبة",
+      "tomo tawa": "سيارة / حافلة",
+      "tomo tawa kon": "طائرة",
+      "tomo tawa telo": "سفينة / قارب",
+      "ilo toki": "هاتف / جهاز تواصل",
+      "ilo sona": "حاسوب / كمبيوتر",
+      "ilo lukin": "نظارة / كاميرا / مجهر",
+      "ilo suno": "مصباح / كشاف",
+      "ilo moku": "ملعقة / شوكة / أدوات الطعام",
+      "ilo nanpa": "آلة حاسبة",
+      "ilo kalama": "آلة موسيقية / مكبر صوت",
+      "jan pona": "صديق / حبيب",
+      "jan ike": "عدو / شخص سيء",
+      "jan sama": "أخ / أخت / قريب",
+      "jan lili": "طفل / شاب",
+      "jan suli": "شخص بالغ / كبير",
+      "jan sona": "عالم / خبير / معلم",
+      "jan pali": "عامل / موظف",
+      "jan lawa": "قائد / رئيس / مدير",
+      "jan utala": "جندي / محارب",
+      "jan unpa": "شريك / زوج",
+      "jan sin": "ضيف / شخص جديد",
+      "tomo moku": "مطعم / مطبخ",
+      "tomo sona": "مدرسة / جامعة / مكتبة",
+      "tomo pali": "مكتب / مصنع / مكان عمل",
+      "tomo lape": "غرفة نوم / فندق",
+      "tomo telo": "حمام / دورة مياه",
+      "tomo esun": "متجر / سوق / مول",
+      "tomo misikeke": "مستشفى / صيدلية",
+      "telo wawa": "قهوة / مشروب طاقة",
+      "telo nasa": "كحول / مشروب مسكر",
+      "telo suwi": "عصير / مشروب غازي",
+      "telo seli": "شاي / مشروب ساخن",
+      "telo lete": "ماء بارد / ثلج",
+      "telo sewi": "مطر",
+      "telo lukin": "دموع",
+      "moku lili": "وجبة خفيفة / سناك",
+      "moku suli": "وجبة رئيسية / وليمة",
+      "moku lete": "آيس كريم / طعام بارد",
+      "kama jo": "شراء / الحصول على",
+      "kama sona": "تعلّم / اكتشاف",
+      "kama lukin": "إيجاد / ملاحظة",
+      "kama pona": "مرحباً بك / أهلاً وسهلاً",
+      "tawa pona": "وداعاً / مع السلامة",
+      "lape pona": "تصبح على خير / نوماً هنيئاً",
+      "moku pona": "بالهناء والشفاء",
+      "tenpo suno": "اليوم / النهار",
+      "tenpo pimeja": "الليل / المساء",
+      "tenpo ni": "الآن / الوقت الحاضر",
+      "tenpo kama": "المستقبل / قريباً",
+      "tenpo pini": "الماضي / سابقاً",
+      "tenpo lili": "لحظة / وقت قصير",
+      "tenpo suli": "فترة طويلة / زمن طويل",
+      "tenpo lete": "الشتاء / البرد",
+      "tenpo seli": "الصيف / الحر",
+      "lipu sona": "كتاب / موسوعة",
+      "lipu toki": "رسالة / مقال / نص",
+      "lipu mani": "نقود ورقية / بطاقة بنكية",
+      "sitelen tawa": "فيديو / فيلم / رسوم متحركة",
+      "kalama musi": "موسيقى / أغنية",
+      "ma tomo": "مدينة / بلدة",
+      "ma kasi": "غابة / حديقة",
+      "ma telo": "بحر / محيط / بحيرة",
+      "nasin pona": "الطريقة الصحيحة / السلوك الجيد",
+      "nasin pi pali suli": "خيار صعب / مهمة شاقة",
+      "pilin pona": "سعيد / مرتاح البال",
+      "pilin ike": "حزين / متضايق",
+      "wile moku": "جائع / يريد الأكل",
+      "wile telo": "عطشان / يريد الشرب",
+      "wile lape": "نعسان / يريد النوم"
+    };
+
+    const EN_TO_TP_PHRASES = [
+      ["hello", "toki"], ["hi", "toki"], ["welcome", "kama pona"], ["goodbye", "tawa pona"],
+      ["bye", "tawa pona"], ["good night", "lape pona"], ["good morning", "tenpo suno pona"],
+      ["thank you", "sina pona"], ["thanks", "sina pona"], ["sorry", "mi pakala"],
+      ["how are you", "sina pilin seme"], ["what is your name", "nimi sina li seme"],
+      ["my name is", "nimi mi li"], ["the best", "pona mute"], ["best", "pona mute"],
+      ["better", "pona mute"], ["awesome", "epiku"], ["amazing", "epiku"],
+      ["wonderful", "pona mute"], ["fantastic", "epiku"], ["excellent", "pona mute"],
+      ["perfect", "pona ale"], ["the worst", "ike mute"], ["worst", "ike mute"],
+      ["worse", "ike mute"], ["terrible", "ike mute"], ["awful", "ike mute"],
+      ["bigger", "suli mute"], ["biggest", "suli mute"], ["huge", "suli mute"],
+      ["smaller", "lili mute"], ["smallest", "lili mute"], ["tiny", "lili mute"],
+      ["faster", "wawa mute"], ["fastest", "wawa mute"], ["quick", "wawa"],
+      ["slow", "tawa lili"], ["stronger", "wawa mute"], ["smart", "sona mute"],
+      ["intelligent", "sona mute"], ["clever", "sona"], ["wise", "sona"],
+      ["difficult", "ike"], ["hard", "kiwen"], ["easy", "pona"], ["simple", "pona"],
+      ["important", "suli"], ["beautiful", "pona lukin"], ["funny", "musi"],
+      ["true", "lon"], ["real", "lon"], ["false", "lon ala"], ["different", "ante"],
+      ["same", "sama"], ["the world", "ma ale"], ["world", "ma ale"], ["universe", "ale"],
+      ["earth", "ma"], ["life", "lon"], ["peace", "pona"], ["war", "utala"],
+      ["problem", "ike"], ["solution", "nasin pona"], ["idea", "sona"],
+      ["future", "tenpo kama"], ["past", "tenpo pini"], ["present", "tenpo ni"],
+      ["story", "lipu toki"], ["knowledge", "sona"], ["science", "sona"],
+      ["art", "musi"], ["way", "nasin"], ["road", "nasin"], ["thing", "ijo"],
+      ["everything", "ijo ale"], ["nothing", "ijo ala"], ["place", "ma"],
+      ["my friend", "jan pona mi"], ["your friend", "jan pona sina"],
+      ["friend", "jan pona"], ["friends", "jan pona mute"], ["enemy", "jan ike"],
+      ["family", "kulupu mama"], ["group", "kulupu"], ["leader", "jan lawa"],
+      ["doctor", "jan misikeke"], ["teacher", "jan sona"], ["student", "jan kama sona"],
+      ["person", "jan"], ["people", "jan mute"], ["man", "mije"], ["woman", "meli"],
+      ["child", "jan lili"], ["children", "jan lili mute"], ["mother", "mama"],
+      ["father", "mama"], ["brother", "jan sama"], ["sister", "jan sama"],
+      ["bicycle", "ilo tawa"], ["bike", "ilo tawa"], ["car", "tomo tawa"],
+      ["bus", "tomo tawa suli"], ["airplane", "tomo tawa kon"], ["plane", "tomo tawa kon"],
+      ["boat", "tomo tawa telo"], ["ship", "tomo tawa telo"], ["phone", "ilo toki"],
+      ["computer", "ilo sona"], ["laptop", "ilo sona"], ["camera", "ilo lukin"],
+      ["glasses", "ilo lukin"], ["lamp", "ilo suno"], ["light", "suno"],
+      ["school", "tomo sona"], ["university", "tomo sona suli"], ["library", "tomo lipu"],
+      ["hospital", "tomo misikeke"], ["restaurant", "tomo moku"], ["shop", "tomo esun"],
+      ["home", "tomo"], ["house", "tomo"], ["city", "ma tomo"], ["country", "ma"],
+      ["coffee", "telo wawa"], ["tea", "telo seli"], ["juice", "telo suwi"],
+      ["rain", "telo sewi"], ["cold water", "telo lete"], ["hot water", "telo seli"],
+      ["water", "telo"], ["ice cream", "moku lete suwi"], ["fire", "seli"],
+      ["food", "moku"], ["fruit", "kili"], ["apple", "kili loje"], ["bread", "pan"],
+      ["fish", "kala"], ["bird", "waso"], ["dog", "soweli"], ["cat", "soweli"],
+      ["animal", "soweli"], ["raccoon", "kijetesantakalu"], ["insect", "pipi"],
+      ["tree", "kasi suli"], ["plant", "kasi"], ["forest", "ma kasi"],
+      ["sea", "ma telo"], ["ocean", "ma telo suli"], ["mountain", "nena suli"],
+      ["sun", "suno"], ["moon", "mun"], ["star", "mun"], ["sky", "sewi"],
+      ["night", "tenpo pimeja"], ["morning", "tenpo suno sin"], ["today", "tenpo suno ni"],
+      ["day", "tenpo suno"], ["tomorrow", "tenpo suno kama"], ["yesterday", "tenpo suno pini"],
+      ["now", "tenpo ni"], ["time", "tenpo"], ["book", "lipu sona"], ["paper", "lipu"],
+      ["message", "lipu toki"], ["money", "mani"], ["video", "sitelen tawa"],
+      ["movie", "sitelen tawa"], ["picture", "sitelen"], ["music", "kalama musi"],
+      ["song", "kalama musi"], ["game", "musi"], ["medicine", "misikeke"],
+      ["want to", "wile"], ["want", "wile"], ["need", "wile"], ["like", "pona"],
+      ["love", "olin"], ["buy", "kama jo"], ["get", "kama jo"], ["have", "jo"],
+      ["learn", "kama sona"], ["learning", "kama sona"], ["study", "kama sona"],
+      ["know", "sona"], ["understand", "sona"], ["speak", "toki"], ["talk", "toki"],
+      ["language", "toki"], ["languages", "toki mute"], ["eat", "moku"],
+      ["eating", "moku"], ["drink", "moku"], ["drinking", "moku"], ["sleep", "lape"],
+      ["go", "tawa"], ["going", "tawa"], ["walk", "tawa noka"], ["run", "tawa wawa"],
+      ["fly", "tawa kon"], ["come", "kama"], ["see", "lukin"], ["look", "lukin"],
+      ["watch", "lukin"], ["read", "lukin e lipu"], ["write", "sitelen"],
+      ["hear", "kute"], ["listen", "kute"], ["work", "pali"], ["make", "pali"],
+      ["do", "pali"], ["give", "pana"], ["send", "pana"], ["open", "open"],
+      ["finish", "pini"], ["die", "moli"], ["fight", "utala"], ["play", "musi"],
+      ["can", "ken"], ["good", "pona"], ["nice", "pona"], ["great", "pona mute"],
+      ["bad", "ike"], ["big", "suli"], ["small", "lili"], ["new", "sin"],
+      ["sweet", "suwi"], ["hot", "seli"], ["cold", "lete"], ["strong", "wawa"],
+      ["fast", "wawa"], ["happy", "pilin pona"], ["sad", "pilin ike"],
+      ["white", "walo"], ["black", "pimeja"], ["red", "loje"], ["yellow", "jelo"],
+      ["blue", "laso"], ["green", "laso"], ["many", "mute"], ["very", "mute"],
+      ["all", "ale"], ["every", "ale"], ["not", "ala"], ["no", "ala"],
+      ["what", "seme"], ["where", "lon seme"], ["who", "jan seme"], ["why", "tan seme"],
+      ["how", "nasin seme"], ["in", "lon"], ["on", "lon"], ["at", "lon"],
+      ["to", "tawa"], ["for", "tawa"], ["from", "tan"], ["with", "kepeken"],
+      ["by", "kepeken"], ["and", "en"], ["or", "anu"], ["but", "taso"], ["only", "taso"]
+    ];
+
+    const STEM_MAP = {
+      good: "pona", nice: "pona", great: "pona", happy: "pilin pona",
+      bad: "ike", sad: "pilin ike", hard: "kiwen",
+      big: "suli", large: "suli", tall: "suli", long: "suli", high: "sewi",
+      small: "lili", little: "lili", short: "lili", low: "anpa",
+      fast: "wawa", quick: "wawa", strong: "wawa",
+      hot: "seli", warm: "seli", cold: "lete", cool: "lete",
+      sweet: "suwi", cute: "suwi", new: "sin", smart: "sona", bright: "suno", dark: "pimeja"
+    };
+
+    function resolveEnglishToken(tok) {
+      if (tok.length > 4 && (tok.endsWith("er") || tok.endsWith("est"))) {
+        let base = tok.endsWith("est") ? tok.slice(0, -3) : tok.slice(0, -2);
+        if (base.length > 2 && base[base.length - 1] === base[base.length - 2]) {
+          base = base.slice(0, -1);
+        }
+        if (base.endsWith("i")) {
+          base = base.slice(0, -1) + "y";
+        }
+        if (STEM_MAP[base]) {
+          return `${STEM_MAP[base]} mute`;
+        }
+      }
+      return null;
+    }
+
+    function convertEnglishSentenceToTokiPona(enText) {
+      let clean = enText.trim();
+      if (!clean) return "";
+
+      const isQuestion = clean.includes("?");
+      clean = clean.replace(/[.,!?;:"']/g, "").trim();
+
+      const lowerExact = clean.toLowerCase();
+      for (const [enP, tpP] of EN_TO_TP_PHRASES) {
+        if (lowerExact === enP) return tpP;
+      }
+
+      const rawWords = clean.split(/\s+/);
+      const properNouns = new Set();
+      rawWords.forEach((w, idx) => {
+        if (idx > 0 && /^[A-Z][a-z]+$/.test(w) && w.toLowerCase() !== "i" && w.toLowerCase() !== "toki" && w.toLowerCase() !== "pona") {
+          properNouns.add(w.toLowerCase());
+        }
+      });
+
+      let working = lowerExact;
+      working = working.replace(/\b(a|an|the|am|is|are|was|were|be|been|do|does|did|will|would|shall|should|please|of)\b/g, " ");
+      working = working.replace(/\s+/g, " ").trim();
+
+      const sortedPhrases = [...EN_TO_TP_PHRASES].sort((a, b) => b[0].length - a[0].length);
+      const placeholders = {};
+      let phIndex = 0;
+
+      for (const [enP, tpP] of sortedPhrases) {
+        const regex = new RegExp(`\\b${enP.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi");
+        if (regex.test(working)) {
+          const token = `__TP${phIndex++}__`;
+          placeholders[token] = tpP;
+          working = working.replace(regex, ` ${token} `);
+        }
+      }
+
+      const tokens = working.split(/\s+/).filter(Boolean).map(tok => {
+        if (placeholders[tok]) return placeholders[tok];
+        if (tok === "i" || tok === "me" || tok === "we" || tok === "us") return "mi";
+        if (tok === "you") return "sina";
+        if (tok === "he" || tok === "she" || tok === "it" || tok === "they" || tok === "them") return "ona";
+        if (tok === "my" || tok === "our") return "POSS_MI";
+        if (tok === "your") return "POSS_SINA";
+        if (tok === "his" || tok === "her" || tok === "their") return "POSS_ONA";
+        if (tok === "this" || tok === "that") return "ni";
+
+        const stemmed = resolveEnglishToken(tok);
+        if (stemmed) return stemmed;
+
+        if (properNouns.has(tok)) return tok.charAt(0).toUpperCase() + tok.slice(1);
+        if (WORD_MAP[tok]) return tok;
+        return tok;
+      });
+
+      let flat = tokens.join(" ").split(/\s+/).filter(Boolean);
+
+      for (let i = 0; i < flat.length - 1; i++) {
+        if (flat[i] === "POSS_MI") {
+          const noun = flat[i + 1];
+          flat.splice(i, 2, noun, "mi");
+        } else if (flat[i] === "POSS_SINA") {
+          const noun = flat[i + 1];
+          flat.splice(i, 2, noun, "sina");
+        } else if (flat[i] === "POSS_ONA") {
+          const noun = flat[i + 1];
+          flat.splice(i, 2, noun, "ona");
+        }
+      }
+      flat = flat.map(w => w.replace("POSS_MI", "mi").replace("POSS_SINA", "sina").replace("POSS_ONA", "ona"));
+
+      const verbs = new Set(["wile", "moku", "tawa", "kama", "lukin", "toki", "sona", "pali", "pana", "jo", "olin", "lape", "kute", "open", "pini", "utala", "musi", "alasa", "awen"]);
+      const preps = new Set(["lon", "tawa", "tan", "kepeken"]);
+
+      let result = [];
+      let hasSubject = false;
+      let hasPredicate = false;
+      let hasObject = false;
+
+      for (let i = 0; i < flat.length; i++) {
+        const w = flat[i];
+        if (i === 0) {
+          result.push(w);
+          hasSubject = true;
+          continue;
+        }
+
+        if (hasSubject && !hasPredicate && (verbs.has(w) || i === 1)) {
+          const subjIsOnlyMiOrSina = (result.length === 1 && (result[0] === "mi" || result[0] === "sina"));
+          if (!subjIsOnlyMiOrSina && w !== "li" && !preps.has(w)) {
+            result.push("li");
+          }
+          hasPredicate = true;
+          result.push(w);
+          continue;
+        }
+
+        if (hasPredicate && !hasObject && !verbs.has(w) && !preps.has(w) && w !== "e" && w !== "mute" && w !== "ala" && w !== "seme") {
+          const prev = result[result.length - 1];
+          if (verbs.has(prev) && prev !== "tawa" && prev !== "kama" && prev !== "lape") {
+            result.push("e");
+            hasObject = true;
+          }
+        }
+
+        result.push(w);
+      }
+
+      let finalTp = result.join(" ").replace(/\s+/g, " ").trim();
+      if (isQuestion && !finalTp.includes("seme")) {
+        finalTp += " anu seme";
+      }
+      return finalTp;
+    }
+
+    // Call Supabase Edge Function powered by Gemini AI without exposing keys
+    async function callTokiPonaAI(text, sourceLang) {
+      const endpoints = [
+        "https://hbgptqmqvaiahspdpjvd.supabase.co/functions/v1/translate-tokipona",
+        "https://lthggnfapmovwahqusbj.supabase.co/functions/v1/translate-tokipona"
+      ];
+      for (const ep of endpoints) {
+        try {
+          const resp = await fetch(ep, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text, source_lang: sourceLang })
+          });
+          if (resp.ok) {
+            const data = await resp.json();
+            if (data && data.toki_pona) return data;
+          }
+        } catch (e) {
+          // Fall through to next endpoint or offline engine
+        }
+      }
+      return null;
+    }
+
+    async function translateArabicToTP() {
+      const arInput = document.getElementById("arToTpInput").value.trim();
+      const resEl = document.getElementById("arTpResult");
+      const noteEl = document.getElementById("arBridgeNote");
+      if (!arInput) return;
+
+      resEl.textContent = "جاري الترجمة بذكاء Gemini...";
+      noteEl.textContent = "الاتصال بدالة الترجمة السحابية...";
+
+      // 1. Try secure Gemini AI via Supabase Edge Function
+      const aiResult = await callTokiPonaAI(arInput, "ar");
+      if (aiResult) {
+        resEl.textContent = aiResult.toki_pona;
+        let details = [];
+        if (aiResult.literal_breakdown) details.push(`التحليل الحرفي: ${aiResult.literal_breakdown}`);
+        if (aiResult.grammar_note_ar) details.push(`قواعد: ${aiResult.grammar_note_ar}`);
+        noteEl.textContent = details.join(" • ") || "ترجمة ذكية دقيقة عبر Gemini AI";
+
+        // Auto-update Sitelen Pona glyphs preview in converter stage
+        const tpInput = document.getElementById("tpInput");
+        if (tpInput) {
+          tpInput.value = aiResult.toki_pona;
+          updatePreview();
+        }
+        return;
+      }
+
+      // 2. Automatic Offline / Semantic Fallback
+      noteEl.textContent = "استخدام المحرك البديل...";
+      try {
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(arInput)}&langpair=ar|en`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const enPivot = data.responseData && data.responseData.translatedText
+          ? data.responseData.translatedText
+          : "";
+
+        if (enPivot) {
+          const tpOut = convertEnglishSentenceToTokiPona(enPivot);
+          resEl.textContent = tpOut;
+          noteEl.textContent = `المترجم البديل (جسر: ${enPivot})`;
+          const tpInput = document.getElementById("tpInput");
+          if (tpInput) {
+            tpInput.value = tpOut;
+            updatePreview();
+          }
+        } else {
+          resEl.textContent = "تعذر الترجمة";
+        }
+      } catch (e) {
+        const tpOut = convertEnglishSentenceToTokiPona(arInput);
+        resEl.textContent = tpOut;
+        noteEl.textContent = "الترجمة باستخدام القاموس المدمج دون إنترنت";
+        const tpInput = document.getElementById("tpInput");
+        if (tpInput) {
+          tpInput.value = tpOut;
+          updatePreview();
+        }
+      }
+    }
+
+    async function translateEnglishToTP() {
+      const enInput = document.getElementById("enToTpInput").value.trim();
+      const resEl = document.getElementById("enTpResult");
+      const noteEl = document.getElementById("enBridgeNote");
+      if (!enInput) return;
+
+      resEl.textContent = "Translating with Gemini AI...";
+      if (noteEl) noteEl.textContent = "Connecting to Supabase Edge Function...";
+
+      // 1. Try secure Gemini AI via Supabase Edge Function
+      const aiResult = await callTokiPonaAI(enInput, "en");
+      if (aiResult) {
+        resEl.textContent = aiResult.toki_pona;
+        let details = [];
+        if (aiResult.literal_breakdown) details.push(`Breakdown: ${aiResult.literal_breakdown}`);
+        if (aiResult.grammar_note_ar) details.push(`قواعد: ${aiResult.grammar_note_ar}`);
+        if (noteEl) noteEl.textContent = details.join(" • ") || "AI Toki Pona Translation";
+
+        // Auto-update Sitelen Pona glyphs preview in converter stage
+        const tpInput = document.getElementById("tpInput");
+        if (tpInput) {
+          tpInput.value = aiResult.toki_pona;
+          updatePreview();
+        }
+        return;
+      }
+
+      // 2. Automatic Offline / Semantic Fallback
+      const tpOut = convertEnglishSentenceToTokiPona(enInput);
+      resEl.textContent = tpOut;
+      if (noteEl) noteEl.textContent = "Offline dictionary fallback translation";
+      const tpInput = document.getElementById("tpInput");
+      if (tpInput) {
+        tpInput.value = tpOut;
+        updatePreview();
+      }
+    }
+
+    function sendToStage(elementId) {
+      const tpText = document.getElementById(elementId).textContent.trim();
+      if (!tpText || tpText.startsWith("جاري")) return;
+      document.getElementById("tpInput").value = tpText;
+      updatePreview();
+      switchTab("converter");
+    }
+
+    function setArExample(txt) {
+      document.getElementById("arToTpInput").value = txt;
+      translateArabicToTP();
+    }
+
+    function setEnExample(txt) {
+      document.getElementById("enToTpInput").value = txt;
+      translateEnglishToTP();
+    }
+
+    let currentCategory = "all";
+    let activeAudio = null;
+    let isSpeakingCancelled = false;
+
+    async function speakText(text) {
+      const clean = text.trim();
+      if (!clean) return;
+
+      isSpeakingCancelled = true;
+      if (activeAudio) {
+        activeAudio.pause();
+        activeAudio = null;
+      }
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      await new Promise(r => setTimeout(r, 30));
+      isSpeakingCancelled = false;
+
+      const words = clean.split(/\s+/).filter(Boolean);
+
+      for (const rawWord of words) {
+        if (isSpeakingCancelled) break;
+
+        const w = rawWord.replace(/[.,!?;:"]/g, "").toLowerCase();
+        const audioUrl = LINKU_AUDIO_MAP[w];
+
+        if (audioUrl) {
+          await new Promise(resolve => {
+            const audio = new Audio(audioUrl);
+            activeAudio = audio;
+            audio.onended = resolve;
+            audio.onerror = resolve;
+            audio.play().catch(resolve);
+          });
+        } else {
+          await new Promise(resolve => {
+            if (!("speechSynthesis" in window)) return resolve();
+            const phonetic = rawWord.replace(/j/gi, "y");
+            const utt = new SpeechSynthesisUtterance(phonetic);
+            utt.lang = "es-ES";
+            utt.rate = 0.85;
+            utt.onend = resolve;
+            utt.onerror = resolve;
+            window.speechSynthesis.speak(utt);
+          });
+        }
+      }
+    }
+
+    function speakTokiPona() {
+      const rawText = document.getElementById("tpInput").value;
+      speakText(rawText);
+    }
+
+    function translateSentence(rawText) {
+      const text = rawText.trim();
+      if (!text) {
+        return { translation: "اكتب جملة بالأعلى لترجمتها...", note: "" };
+      }
+
+      const laParts = text.split(/\bla\b/i).map(p => p.trim()).filter(Boolean);
+      if (laParts.length > 1) {
+        const translatedClauses = laParts.map((clause, idx) => {
+          const res = translateClause(clause);
+          if (idx === 0) return `في (${res.text})`;
+          return res.text;
+        });
+        return {
+          translation: translatedClauses.join("، "),
+          note: "جملة سياقية باستخدام (la)"
+        };
+      }
+
+      const single = translateClause(text);
+      return {
+        translation: single.text,
+        note: single.note
+      };
+    }
+
+    function tokenizeWithCompounds(words) {
+      const tokens = [];
+      let i = 0;
+      while (i < words.length) {
+        if (i + 2 < words.length) {
+          const tri = `${words[i]} ${words[i+1]} ${words[i+2]}`.toLowerCase();
+          if (COMPOUNDS[tri]) {
+            tokens.push({ raw: `${words[i]} ${words[i+1]} ${words[i+2]}`, ar: COMPOUNDS[tri].split("/")[0].trim(), isCompound: true });
+            i += 3;
+            continue;
+          }
+        }
+        if (i + 1 < words.length) {
+          const bi = `${words[i]} ${words[i+1]}`.toLowerCase();
+          if (COMPOUNDS[bi]) {
+            tokens.push({ raw: `${words[i]} ${words[i+1]}`, ar: COMPOUNDS[bi].split("/")[0].trim(), isCompound: true });
+            i += 2;
+            continue;
+          }
+        }
+        tokens.push({ raw: words[i], ar: null, isCompound: false });
+        i++;
+      }
+      return tokens;
+    }
+
+    function translateClause(clause) {
+      const cleanClause = clause.replace(/[.,!?;:"]/g, "").trim();
+      const lowerClause = cleanClause.toLowerCase();
+
+      if (COMPOUNDS[lowerClause]) {
+        return {
+          text: COMPOUNDS[lowerClause].split("/")[0].trim(),
+          note: "تعبير اصطلاحي مركب"
+        };
+      }
+
+      const rawWords = cleanClause.split(/\s+/);
+      const tokens = tokenizeWithCompounds(rawWords);
+
+      let subjectTokens = [];
+      let predicateTokens = [];
+      let objectTokens = [];
+      let prepTokens = [];
+
+      let mode = "subject";
+      const firstLower = tokens[0].raw.toLowerCase();
+
+      if ((firstLower === "mi" || firstLower === "sina") && tokens.length > 1 && tokens[1].raw.toLowerCase() !== "li") {
+        subjectTokens.push(tokens[0]);
+        mode = "predicate";
+        for (let i = 1; i < tokens.length; i++) {
+          const w = tokens[i].raw.toLowerCase();
+          if (!tokens[i].isCompound && w === "e") { mode = "object"; continue; }
+          if (!tokens[i].isCompound && (w === "kepeken" || w === "lon" || w === "tawa" || w === "tan")) {
+            mode = "prep";
+            prepTokens.push(tokens[i]);
+            continue;
+          }
+          if (mode === "predicate") predicateTokens.push(tokens[i]);
+          else if (mode === "object") objectTokens.push(tokens[i]);
+          else if (mode === "prep") prepTokens.push(tokens[i]);
+        }
+      } else {
+        for (let i = 0; i < tokens.length; i++) {
+          const w = tokens[i].raw.toLowerCase();
+          if (!tokens[i].isCompound && w === "li" && mode === "subject") { mode = "predicate"; continue; }
+          if (!tokens[i].isCompound && w === "e") { mode = "object"; continue; }
+          if (!tokens[i].isCompound && (w === "kepeken" || w === "lon" || w === "tawa" || w === "tan") && mode !== "subject") {
+            mode = "prep";
+            prepTokens.push(tokens[i]);
+            continue;
+          }
+          if (mode === "subject") subjectTokens.push(tokens[i]);
+          else if (mode === "predicate") predicateTokens.push(tokens[i]);
+          else if (mode === "object") objectTokens.push(tokens[i]);
+          else if (mode === "prep") prepTokens.push(tokens[i]);
+        }
+      }
+
+      const renderTokens = (arr, isFirstPersonSubj = false) => {
+        return arr.map((t, idx) => {
+          if (t.isCompound) return t.ar;
+          if (/^[A-Z]/.test(t.raw)) return t.raw;
+          const lw = t.raw.toLowerCase();
+          if (lw === "mi") return "أنا";
+          if (lw === "sina") return "أنت";
+          if (lw === "ona") return "هو";
+          if (lw === "wile" && isFirstPersonSubj && idx === 0) return "أريد";
+          if (lw === "lukin" && isFirstPersonSubj && idx === 0) return "أرى";
+          if (lw === "moku" && isFirstPersonSubj && idx === 0) return "آكل";
+          if (lw === "tawa" && isFirstPersonSubj && idx === 0) return "أذهب";
+          const entry = WORD_MAP[lw];
+          return entry ? entry.ar.split("/")[0].trim() : t.raw;
+        }).join(" ");
+      };
+
+      let subjText = "";
+      if (subjectTokens.length > 1 && subjectTokens[subjectTokens.length - 1].raw.toLowerCase() === "mi") {
+        subjText = renderTokens(subjectTokens.slice(0, -1)) + "ي";
+      } else if (subjectTokens.length > 1 && subjectTokens[subjectTokens.length - 1].raw.toLowerCase() === "sina") {
+        subjText = renderTokens(subjectTokens.slice(0, -1)) + "ك";
+      } else {
+        subjText = renderTokens(subjectTokens);
+      }
+
+      const isMe = subjectTokens.length === 1 && subjectTokens[0].raw.toLowerCase() === "mi";
+      const predText = renderTokens(predicateTokens, isMe);
+      const objText = renderTokens(objectTokens);
+      const prepText = renderTokens(prepTokens);
+
+      let parts = [];
+      if (subjText) parts.push(subjText);
+      if (predText) parts.push(predText);
+      if (objText) parts.push(objText);
+      if (prepText) parts.push(prepText);
+
+      let finalSentence = parts.join(" ").replace(/\s+/g, " ").trim();
+      if (lowerClause.includes("seme")) {
+        finalSentence += "؟";
+      }
+
+      let noteParts = [];
+      if (subjText) noteParts.push(`الفاعل: ${subjText}`);
+      if (predText) noteParts.push(`الفعل/الخبر: ${predText}`);
+      if (objText) noteParts.push(`المفعول به: ${objText}`);
+      if (prepText) noteParts.push(`شبه الجملة: ${prepText}`);
+
+      return {
+        text: finalSentence,
+        note: noteParts.join(" | ")
+      };
+    }
+
+    function updatePreview() {
+      const input = document.getElementById("tpInput").value;
+      const stage = document.getElementById("previewStage");
+      const bgMode = document.getElementById("bgMode").value;
+      const color = document.getElementById("glyphColor").value;
+      const size = parseInt(document.getElementById("glyphSize").value, 10);
+      const showLabels = document.getElementById("showLabels").checked;
+
+      stage.className = `preview-stage ${bgMode}`;
+      stage.style.color = color;
+
+      const words = input.trim().split(/\s+/).filter(Boolean);
+      stage.innerHTML = "";
+
+      words.forEach(w => {
+        const svgHtml = createSVGElement(w, size, color);
+        if (!svgHtml) return;
+        const unit = document.createElement("div");
+        unit.className = "glyph-unit";
+        unit.title = "اضغط لسماع نطق الكلمة";
+        unit.onclick = () => speakText(w);
+        unit.innerHTML = svgHtml + (showLabels ? `<span class="glyph-caption" style="color:${color}">${w}</span>` : "");
+        stage.appendChild(unit);
+      });
+
+      const sem = translateSentence(input);
+      document.getElementById("semanticOutput").textContent = sem.translation;
+      document.getElementById("grammarNote").textContent = sem.note;
+
+      const bar = document.getElementById("breakdownBar");
+      bar.innerHTML = "";
+      let i = 0;
+      while (i < words.length) {
+        const clean1 = words[i].replace(/[.,!?;:"]/g, "");
+        const clean2 = i + 1 < words.length ? words[i + 1].replace(/[.,!?;:"]/g, "") : "";
+        const bi = `${clean1} ${clean2}`.toLowerCase();
+
+        if (clean2 && COMPOUNDS[bi]) {
+          const pill = document.createElement("div");
+          pill.className = "token-pill compound";
+          pill.innerHTML = `<span class="tp">${clean1} ${clean2}</span><span class="ar">${COMPOUNDS[bi].split("/")[0].trim()}</span>`;
+          bar.appendChild(pill);
+          i += 2;
+          continue;
+        }
+
+        const entry = WORD_MAP[clean1.toLowerCase()];
+        const pill = document.createElement("div");
+        pill.className = "token-pill";
+        const isProper = /^[A-Z]/.test(clean1);
+        const mappedPreview = isProper ? ` (${mapToTokiLetters(clean1).join("")})` : "";
+        const arLabel = isProper ? `اسم علم${mappedPreview}` : (entry ? entry.ar.split("/")[0].trim() : "غير معروف");
+        pill.innerHTML = `<span class="tp">${clean1}</span><span class="ar">${arLabel}</span>`;
+        bar.appendChild(pill);
+        i++;
+      }
+    }
+
+    function setExample(str) {
+      document.getElementById("tpInput").value = str;
+      updatePreview();
+      speakText(str);
+    }
+
+    function clearText() {
+      document.getElementById("tpInput").value = "";
+      updatePreview();
+    }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderDictionary();
+    }
+
+    function renderDictionary() {
+      const q = document.getElementById("dictSearch").value.trim().toLowerCase();
+      const grid = document.getElementById("dictGrid");
+      grid.innerHTML = "";
+
+      const filtered = DICTIONARY.filter(item => {
+        const matchCat = currentCategory === "all" || item.cat === currentCategory;
+        const matchQuery = !q || item.w.includes(q) || item.ar.includes(q);
+        return matchCat && matchQuery;
+      });
+
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "dict-item";
+        const iconHtml = renderSingleGlyphSVG(item.w, 46, "#F5C518");
+        div.innerHTML = `
+          ${iconHtml}
+          <div class="dict-word">${item.w}</div>
+          <div class="dict-meaning">${item.ar}</div>
+        `;
+        div.onclick = () => {
+          const inp = document.getElementById("tpInput");
+          inp.value = (inp.value.trim() + " " + item.w).trim();
+          updatePreview();
+          speakText(item.w);
+          showToast(`أضيفت: ${item.w}`);
+        };
+        grid.appendChild(div);
+      });
+    }
+
+    // Export combined high-res SVG using nested <svg> viewBox from glyphs.js
+    function buildCombinedSVG() {
+      const input = document.getElementById("tpInput").value.trim();
+      const words = input.split(/\s+/).filter(Boolean);
+      const color = document.getElementById("glyphColor").value;
+      const size = 90;
+      const gap = 20;
+      const totalWidth = Math.max(200, words.length * (size + gap) + gap);
+      const totalHeight = size + 40;
+
+      let inner = "";
+      words.forEach((w, idx) => {
+        const clean = w.replace(/[.,!?;:"]/g, "").toLowerCase();
+        const glyphData = window.SITELEN_GLYPHS && window.SITELEN_GLYPHS[clean];
+        const x = gap + idx * (size + gap);
+        if (glyphData && glyphData.d) {
+          inner += `<svg x="${x}" y="20" width="${size}" height="${size}" viewBox="${glyphData.viewBox}"><path fill="${color}" d="${glyphData.d}" /></svg>`;
+        } else {
+          inner += `<circle cx="${x + size / 2}" cy="${20 + size / 2}" r="30" fill="none" stroke="${color}" stroke-width="6"/>`;
+        }
+      });
+
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}">${inner}</svg>`;
+    }
+
+    function downloadSVG() {
+      const svgStr = buildCombinedSVG();
+      const blob = new Blob([svgStr], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sitelen-pona.svg";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("تم تحميل SVG");
+    }
+
+    function downloadPNG() {
+      const svgStr = buildCombinedSVG();
+      const img = new Image();
+      const svgBlob = new Blob([svgStr], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * 2;
+        canvas.height = img.height * 2;
+        const ctx = canvas.getContext("2d");
+        ctx.scale(2, 2);
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+
+        const pngUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = pngUrl;
+        a.download = "sitelen-pona.png";
+        a.click();
+        showToast("تم تحميل PNG");
+      };
+      img.src = url;
+    }
+
+    function copyTranslation() {
+      const txt = document.getElementById("semanticOutput").textContent;
+      navigator.clipboard.writeText(txt);
+      showToast("تم نسخ الترجمة");
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2000);
+    }
+
+    document.getElementById("tpInput").addEventListener("input", updatePreview);
+    renderDictionary();
+    updatePreview();
+    loadLinkuResources();
+  </script>
+</body>
+</html>

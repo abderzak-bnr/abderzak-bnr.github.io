@@ -1,0 +1,20 @@
+# Secrets and Environment Variables
+.env*
+*.env
+*.key
+*.pem
+
+# Supabase Local Cache & State
+.supabase/
+supabase/.temp/
+
+# Logs and Backups
+*.log
+*.bak
+*.zip
+
+# OS and Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
